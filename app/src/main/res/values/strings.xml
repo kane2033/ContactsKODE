@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">ContactsKODE</string>
+
+    <string name="contacts_list_title">Contacts</string>
+
+    <string name="contact_create">Create contact</string>
+    <string name="contacts_search">Search contacts</string>
+    <string name="contacts_settings">Settings</string>
+
+    <string name="contact_image_description">Contact\'s image</string>
+
+    <string name="feature_in_development">Feature is in development</string>
 </resources>
