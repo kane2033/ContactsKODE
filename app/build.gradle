@@ -62,6 +62,8 @@ dependencies {
     implementation "io.insert-koin:koin-android:$koin_version"
     implementation "io.insert-koin:koin-android-ext:$koin_version"
 
+    implementation "com.squareup.picasso:picasso:$picasso_version"
+
     // Modules
     implementation project(":data")
     implementation project(":domain")

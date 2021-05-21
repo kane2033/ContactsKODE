@@ -11,6 +11,7 @@ buildscript {
         nav_version = "2.3.5"
         viewbindingpropertydelegate_version = "1.4.1"
         koin_version = "3.0.1"
+        picasso_version = "2.71828"
         room_version = "2.3.0"
 
         junit_version = "4.13.2"
