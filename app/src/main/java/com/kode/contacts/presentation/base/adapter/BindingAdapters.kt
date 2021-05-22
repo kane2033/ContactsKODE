@@ -24,7 +24,7 @@ object BindingAdapters {
     @Suppress("UNCHECKED_CAST")
     @BindingAdapter(value = ["items"])
     fun <T> RecyclerView.setItems(items: List<T>?) {
-        (this.adapter as BaseListAdapter<T>).submitList(items)
+        (adapter as BaseListAdapter<T>).submitList(items)
     }
 
     @JvmStatic

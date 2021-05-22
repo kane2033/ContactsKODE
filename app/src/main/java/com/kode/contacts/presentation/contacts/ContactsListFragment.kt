@@ -26,8 +26,13 @@ class ContactsListFragment : Fragment(R.layout.fragment_contacts_list) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
+            lifecycleOwner = viewLifecycleOwner
             viewModel = this@ContactsListFragment.viewModel
             adapter = ContactsAdapter()
+
+            addContactButton.setOnClickListener {
+                this@ContactsListFragment.viewModel.createContact()
+            }
         }
 
         viewModel.uiState.observeFailure(viewLifecycleOwner, {

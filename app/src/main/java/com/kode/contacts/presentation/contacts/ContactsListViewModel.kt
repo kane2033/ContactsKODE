@@ -11,16 +11,21 @@ import com.kode.contacts.presentation.base.extension.loadingIndication
 import com.kode.domain.base.Event
 import com.kode.domain.base.UiState
 import com.kode.domain.contacts.entity.Contact
+import com.kode.domain.contacts.usecase.CreateContact
 import com.kode.domain.contacts.usecase.FetchContactsList
-import kotlinx.coroutines.flow.single
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
-class ContactsListViewModel(private val fetchContactsList: FetchContactsList): ViewModel() {
+class ContactsListViewModel(
+    private val fetchContactsList: FetchContactsList,
+    private val createContact: CreateContact
+) : ViewModel() {
 
     private val _uiState = MutableLiveData<Event<UiState>>()
     val uiState = _uiState.asLiveData()
 
-    private val _contacts =  MutableLiveData<List<Contact>>()
+    private val _contacts = MutableLiveData<List<Contact>>()
     val contacts = _contacts.asLiveData()
 
     val onContactClicked = ItemClickedInterface<Contact> {
@@ -33,11 +38,24 @@ class ContactsListViewModel(private val fetchContactsList: FetchContactsList): V
 
     private fun fetchContacts() {
         viewModelScope.launch {
-            val result = fetchContactsList(Unit).loadingIndication(_uiState).single()
-            result.fold(
-                onSuccess = { _contacts.value = it },
-                onFailure =  { it.handleFailure(_uiState) }
-            )
+            fetchContactsList(Unit).loadingIndication(_uiState).collect { result ->
+                result.fold(
+                    onSuccess = { _contacts.value = it },
+                    onFailure = { it.handleFailure(_uiState) }
+                )
+            }
+        }
+    }
+
+    fun createContact() {
+        val contact = if (Random.nextBoolean()) {
+            Contact("Akakiy Mihailovich")
+        } else {
+            Contact("Semen Pavlovich")
+        }
+        viewModelScope.launch {
+            val result = createContact(contact).loadingIndication(_uiState).single()
+            result.onFailure { it.handleFailure(_uiState) }
         }
     }
 }
