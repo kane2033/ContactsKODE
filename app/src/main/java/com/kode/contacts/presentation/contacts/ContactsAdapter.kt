@@ -3,7 +3,7 @@ package com.kode.contacts.presentation.contacts
 import androidx.recyclerview.widget.DiffUtil
 import com.kode.contacts.R
 import com.kode.contacts.presentation.base.adapter.BaseListAdapter
-import com.kode.domain.entity.Contact
+import com.kode.domain.contacts.entity.Contact
 
 class ContactsAdapter: BaseListAdapter<Contact>(Companion) {
 
@@ -20,7 +20,7 @@ class ContactsAdapter: BaseListAdapter<Contact>(Companion) {
     // Неотсортированный список хранит изначальный список
     private var unfilteredList = listOf<Contact>()
 
-    // При добавлении списка рецептов,
+    // При добавлении списка,
     // сохраняется изначальный список
     override fun submitList(list: List<Contact>?) {
         list?.let { unfilteredList = it }

@@ -10,4 +10,24 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
+
+    <style name="failure_title" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="failure_text" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:gravity">center</item>
+        <item name="android:lineSpacingExtra">5sp</item>
+    </style>
+
+    <style name="retry_button" parent="button">
+        <item name="strokeColor">?attr/colorSecondary</item>
+    </style>
+
+    <style name="button" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textColor">?attr/colorSecondary</item>
+        <item name="android:lineSpacingExtra">8sp</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
 </resources>

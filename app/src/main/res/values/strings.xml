@@ -9,5 +9,12 @@
 
     <string name="contact_image_description">Contact\'s image</string>
 
+    <string name="error_base_title">Something went wrong</string>
+    <string name="error_base">The problem is on our side, we are already looking into it.
+        Please try refreshing the screen later.</string>
+
+    <string name="retry">Retry</string>
+    <string name="refresh">Refresh</string>
+
     <string name="feature_in_development">Feature is in development</string>
 </resources>

@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
-            type="com.kode.domain.entity.Contact" />
+            type="com.kode.domain.contacts.entity.Contact" />
+
         <variable
             name="clickListener"
             type="com.kode.contacts.presentation.base.adapter.ItemClickedInterface" />
@@ -15,7 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/def_margin">
+        android:layout_marginTop="@dimen/def_margin">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/photoView"
@@ -36,6 +38,7 @@
             android:layout_height="0dp"
             android:layout_marginStart="@dimen/def_margin"
             android:gravity="center_vertical"
+            android:text="@{item.name}"
             app:layout_constraintBottom_toBottomOf="@id/photoView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/photoView"

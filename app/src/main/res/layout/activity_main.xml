@@ -9,7 +9,6 @@
         android:layout_height="match_parent"
         tools:openDrawer="end">
 
-
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -31,6 +30,8 @@
                         android:id="@+id/toolbar"
                         android:layout_width="match_parent"
                         android:layout_height="?attr/actionBarSize"
+                        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                         tools:title="Contacts" />
 
                 </com.google.android.material.appbar.AppBarLayout>
