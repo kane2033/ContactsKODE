@@ -5,9 +5,9 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class ContactEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) val contactId: Long = 0,
     val firstName: String,
-    val lastName: String,
-    val phone: String,
-    val phoneType: String,
+    val lastName: String?,
+    val avatarFilePath: String?,
+    val toneFilePath: String?
 )

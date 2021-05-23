@@ -1,18 +1,20 @@
-package com.kode.contacts.presentation.contacts
+package com.kode.contacts.presentation.contacts.list
 
 import androidx.recyclerview.widget.DiffUtil
 import com.kode.contacts.R
 import com.kode.contacts.presentation.base.adapter.BaseListAdapter
+import com.kode.contacts.presentation.base.adapter.ItemClickedInterface
 import com.kode.domain.contacts.entity.Contact
 
-class ContactsAdapter: BaseListAdapter<Contact>(Companion) {
+class ContactsAdapter(clickListener: ItemClickedInterface<Contact>) :
+    BaseListAdapter<Contact>(Companion, clickListener) {
 
     companion object : DiffUtil.ItemCallback<Contact>() {
         override fun areItemsTheSame(oldItem: Contact, newItem: Contact): Boolean =
             oldItem === newItem
 
         override fun areContentsTheSame(oldItem: Contact, newItem: Contact): Boolean =
-            oldItem.name == newItem.name
+            "${oldItem.firstName} + ${oldItem.lastName}" == "${newItem.firstName} + ${newItem.lastName}"
     }
 
     override fun getItemViewType(position: Int) = R.layout.item_contact

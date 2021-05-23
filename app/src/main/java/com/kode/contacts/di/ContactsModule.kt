@@ -1,6 +1,7 @@
 package com.kode.contacts.di
 
-import com.kode.contacts.presentation.contacts.ContactsListViewModel
+import com.kode.contacts.presentation.contacts.details.ContactDetailsViewModel
+import com.kode.contacts.presentation.contacts.list.ContactsListViewModel
 import com.kode.data.contacts.datasource.database.ContactsDataSourceImpl
 import com.kode.domain.contacts.datasource.ContactsDataSource
 import com.kode.domain.contacts.usecase.CreateContact
@@ -15,6 +16,7 @@ object ContactsModule {
         single { FetchContactsList(get()) }
         single { CreateContact(get()) }
 
-        viewModel { ContactsListViewModel(get(), get()) }
+        viewModel { ContactsListViewModel(get()) }
+        viewModel { ContactDetailsViewModel(get()) }
     }
 }

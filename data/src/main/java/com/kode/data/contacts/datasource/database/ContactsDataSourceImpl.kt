@@ -8,7 +8,6 @@ import com.kode.data.contacts.datasource.database.db.ContactsDatabase
 import com.kode.domain.contacts.datasource.ContactsDataSource
 import com.kode.domain.contacts.entity.Contact
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 
 class ContactsDataSourceImpl(context: Context) : ContactsDataSource {
@@ -20,11 +19,11 @@ class ContactsDataSourceImpl(context: Context) : ContactsDataSource {
             .map { it.toDomainEntityList() }
     }
 
-    override suspend fun addContactsList(contacts: List<Contact>){
-        return database.contactDao().insertAll(contacts.toDbEntityList())
+    override suspend fun addContactsList(contacts: List<Contact>) {
+        return database.contactDao().insertContactsListWithPhones(contacts.toDbEntityList())
     }
 
     override suspend fun addContact(contact: Contact) {
-        return database.contactDao().insertContact(contact.toDbEntity())
+        return database.contactDao().insertContactWithPhones(contact.toDbEntity())
     }
 }

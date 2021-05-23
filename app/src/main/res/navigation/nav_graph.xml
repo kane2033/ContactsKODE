@@ -7,9 +7,23 @@
 
     <fragment
         android:id="@+id/contactsListFragment"
-        android:name="com.kode.contacts.presentation.contacts.ContactsListFragment"
-        tools:layout="@layout/fragment_contacts_list"
-        android:label="@string/contacts_list_title" />
+        android:name="com.kode.contacts.presentation.contacts.list.ContactsListFragment"
+        android:label="@string/contacts_list_title"
+        tools:layout="@layout/fragment_contacts_list">
+        <action
+            android:id="@+id/action_contactsListFragment_to_contactDetailsFragment"
+            app:destination="@id/contactDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/contactDetailsFragment"
+        android:name="com.kode.contacts.presentation.contacts.details.ContactDetailsFragment"
+        android:label=""
+        tools:layout="@layout/fragment_contact_details">
+        <argument
+            android:name="selectedContact"
+            app:argType="com.kode.domain.contacts.entity.Contact" />
+    </fragment>
 
     <dialog
         android:id="@+id/failureFragment"

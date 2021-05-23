@@ -4,12 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.kode.contacts.presentation.contacts.ContactsListViewModel" />
-        <variable
-            name="adapter"
-            type="com.kode.contacts.presentation.contacts.ContactsAdapter" />
+            type="com.kode.contacts.presentation.contacts.list.ContactsListViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -22,12 +20,8 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
-                android:name=".features.loan.ui.LoansListFragment"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:recyclerAdapter="@{adapter}"
-                app:items="@{viewModel.contacts}"
-                app:onClick="@{viewModel.onContactClicked}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

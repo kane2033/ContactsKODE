@@ -17,7 +17,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/def_margin">
+        android:layout_marginTop="@dimen/def_margin"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{() -> clickListener.onClick(item)}">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/photoView"
@@ -38,7 +41,7 @@
             android:layout_height="0dp"
             android:layout_marginStart="@dimen/def_margin"
             android:gravity="center_vertical"
-            android:text="@{item.name}"
+            android:text='@{@string/contact_name(item.firstName, item.LastName ?? "")}'
             app:layout_constraintBottom_toBottomOf="@id/photoView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/photoView"
