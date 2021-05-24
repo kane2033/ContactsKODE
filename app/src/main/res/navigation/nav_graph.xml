@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_contactsListFragment_to_contactDetailsFragment"
             app:destination="@id/contactDetailsFragment" />
+        <action
+            android:id="@+id/action_contactsListFragment_to_contactEditFragment"
+            app:destination="@id/contactEditFragment" />
     </fragment>
 
     <fragment
@@ -23,6 +26,25 @@
         <argument
             android:name="selectedContact"
             app:argType="com.kode.domain.contacts.entity.Contact" />
+        <action
+            android:id="@+id/action_contactDetailsFragment_to_contactEditFragment"
+            app:destination="@id/contactEditFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/contactEditFragment"
+        android:name="com.kode.contacts.presentation.contacts.edit.ContactEditFragment"
+        tools:layout="@layout/fragment_contact_edit">
+        <argument
+            android:name="contact"
+            android:defaultValue="@null"
+            app:argType="com.kode.domain.contacts.entity.Contact"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_contactEditFragment_to_contactsListFragment"
+            app:destination="@id/contactsListFragment"
+            app:popUpTo="@id/contactsListFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <dialog
@@ -37,5 +59,6 @@
     <action
         android:id="@+id/action_global_failureFragment"
         app:destination="@id/failureFragment" />
+
 
 </navigation>

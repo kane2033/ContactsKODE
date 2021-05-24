@@ -6,6 +6,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.kode.contacts.R
@@ -30,7 +31,7 @@ class ContactDetailsFragment : Fragment(R.layout.fragment_contact_details) {
         super.onViewCreated(view, savedInstanceState)
 
         val onPhoneClicked = ItemClickedInterface<PhoneNumber> {
-            makeSnackBar("phone clicked")
+            makeSnackBar(R.string.feature_in_development, view = binding.editContactButton)
         }
 
         val adapter = PhoneNumberAdapter(onPhoneClicked)
@@ -39,6 +40,15 @@ class ContactDetailsFragment : Fragment(R.layout.fragment_contact_details) {
             lifecycleOwner = viewLifecycleOwner
             viewModel = this@ContactDetailsFragment.viewModel
             phoneNumbersRecyclerView.adapter = adapter
+
+            editContactButton.setOnClickListener {
+                //val title = getString(ContactEditFragment.getTitle(ContactEditFragment.Mode.EDIT))
+                val action =
+                    ContactDetailsFragmentDirections.actionContactDetailsFragmentToContactEditFragment(
+                        contact = this@ContactDetailsFragment.viewModel.contact.value
+                    )
+                findNavController().navigate(action)
+            }
         }
 
         viewModel.contact.observe(viewLifecycleOwner, {

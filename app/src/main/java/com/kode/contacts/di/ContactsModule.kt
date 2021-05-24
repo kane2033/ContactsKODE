@@ -1,9 +1,11 @@
 package com.kode.contacts.di
 
 import com.kode.contacts.presentation.contacts.details.ContactDetailsViewModel
+import com.kode.contacts.presentation.contacts.edit.ContactEditViewModel
 import com.kode.contacts.presentation.contacts.list.ContactsListViewModel
 import com.kode.data.contacts.datasource.database.ContactsDataSourceImpl
 import com.kode.domain.contacts.datasource.ContactsDataSource
+import com.kode.domain.contacts.entity.Contact
 import com.kode.domain.contacts.usecase.CreateContact
 import com.kode.domain.contacts.usecase.FetchContactsList
 import org.koin.android.ext.koin.androidContext
@@ -18,5 +20,6 @@ object ContactsModule {
 
         viewModel { ContactsListViewModel(get()) }
         viewModel { ContactDetailsViewModel(get()) }
+        viewModel { (contact: Contact) -> ContactEditViewModel(contact) }
     }
 }

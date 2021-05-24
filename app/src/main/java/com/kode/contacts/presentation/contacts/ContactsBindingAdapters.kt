@@ -1,12 +1,11 @@
-package com.kode.contacts.presentation.contacts.details
+package com.kode.contacts.presentation.contacts
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.kode.contacts.R
 import com.kode.domain.contacts.entity.PhoneNumberType
 
-object ContactDetailsBindingAdapters {
-
+object ContactsBindingAdapters {
     @JvmStatic
     @BindingAdapter(value = ["phoneType"])
     fun TextView.setPhoneType(type: PhoneNumberType?) {

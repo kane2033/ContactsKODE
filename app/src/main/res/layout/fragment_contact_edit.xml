@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.kode.contacts.presentation.contacts.edit.ContactEditViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:theme="@style/Theme.ContactsKODE.ContactInfo">
+
+        <ImageView
+            android:id="@+id/photoIconView"
+            android:layout_width="@dimen/contact_edit_icon_size"
+            android:layout_height="@dimen/contact_edit_icon_size"
+            android:layout_marginStart="@dimen/def_margin"
+            android:layout_marginTop="26dp"
+            android:contentDescription="@string/photo_description"
+            android:src="@drawable/ic_photo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/avatarView"
+            android:layout_width="74dp"
+            android:layout_height="74dp"
+            android:layout_marginStart="34dp"
+            android:contentDescription="@string/contact_image_description"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_avatar_border"
+            app:layout_constraintStart_toEndOf="@id/photoIconView"
+            app:layout_constraintTop_toTopOf="@id/photoIconView" />
+
+        <Button
+            android:id="@+id/changeAvatarButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/def_margin"
+            android:text="@string/change_photo"
+            app:layout_constraintStart_toEndOf="@id/avatarView"
+            app:layout_constraintTop_toTopOf="@id/avatarView" />
+
+        <ImageView
+            android:id="@+id/phoneIconView"
+            android:layout_width="@dimen/contact_edit_icon_size"
+            android:layout_height="@dimen/contact_edit_icon_size"
+            android:layout_marginStart="@dimen/def_margin"
+            android:layout_marginTop="35dp"
+            android:contentDescription="@string/photo_description"
+            android:src="@drawable/ic_phone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/avatarView" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/phoneNumberInputLayout"
+            style="@style/contact_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/contact_input_margin_start"
+            android:layout_marginEnd="@dimen/contact_input_margin_end"
+            android:hint="@string/phone_number_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/phoneIconView"
+            app:layout_constraintTop_toTopOf="@id/phoneIconView">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phoneNumberEditText"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:text="@{viewModel.contact.phoneNumbers.get(0).number}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="+7 (906) 911 45 78" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/phoneTypeInputLayout"
+            style="@style/contact_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/contact_input_margin_top"
+            android:layout_marginEnd="@dimen/contact_input_margin_end_small"
+            android:hint="@string/phone_type_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/phoneNumberInputLayout"
+            app:layout_constraintTop_toBottomOf="@id/phoneNumberInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phoneTypeEditText"
+                app:phoneType="@{viewModel.contact.phoneNumbers.get(0).type}"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Mobile" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/nameIconView"
+            android:layout_width="@dimen/contact_edit_icon_size"
+            android:layout_height="@dimen/contact_edit_icon_size"
+            android:layout_marginStart="@dimen/def_margin"
+            android:layout_marginTop="40dp"
+            android:contentDescription="@string/contact_name_description"
+            android:src="@drawable/ic_person"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/phoneTypeInputLayout" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/firstNameInputLayout"
+            style="@style/contact_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/contact_input_margin_start"
+            android:layout_marginEnd="@dimen/contact_input_margin_end"
+            android:hint="@string/first_name_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/nameIconView"
+            app:layout_constraintTop_toTopOf="@id/nameIconView">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/firstNameEditText"
+                android:text="@{viewModel.contact.firstName}"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/secondNameInputLayout"
+            style="@style/contact_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/contact_input_margin_top"
+            android:layout_marginEnd="@dimen/contact_input_margin_end"
+            android:hint="@string/second_name_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/firstNameInputLayout"
+            app:layout_constraintTop_toBottomOf="@id/firstNameInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/secondNameEditText"
+                android:text="@{viewModel.contact.lastName}"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/ringtoneIconView"
+            android:layout_width="@dimen/contact_edit_icon_size"
+            android:layout_height="@dimen/contact_edit_icon_size"
+            android:layout_marginStart="@dimen/def_margin"
+            android:layout_marginTop="40dp"
+            android:contentDescription="@string/contact_name_description"
+            android:src="@drawable/ic_music"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/secondNameInputLayout" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/ringtoneInputLayout"
+            style="@style/contact_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/contact_input_margin_start"
+            android:layout_marginEnd="@dimen/contact_input_margin_end"
+            android:hint="@string/ringtone_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ringtoneIconView"
+            app:layout_constraintTop_toTopOf="@id/ringtoneIconView">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ringtoneEditText"
+                android:text="@{viewModel.contact.toneFilePath}"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

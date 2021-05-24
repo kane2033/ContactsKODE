@@ -1,5 +1,6 @@
 package com.kode.contacts.presentation.base.extension
 
+import android.app.AlertDialog
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.StringRes
@@ -16,6 +17,40 @@ import com.kode.domain.base.exception.Failure
 import com.kode.domain.base.exception.info.FailureInfo
 import com.kode.domain.base.exception.info.FullScreenFailureInfo
 import com.kode.domain.base.exception.info.SmallFailureInfo
+
+fun Fragment.makeAlertDialog(
+    @StringRes title: Int,
+    @StringRes message: Int,
+    positiveCallback: () -> Unit,
+    negativeCallback: () -> Unit,
+    @StringRes positiveText: Int = R.string.yes,
+    @StringRes negativeText: Int = R.string.no,
+) {
+    makeAlertDialog(
+        title = getString(title),
+        message = getString(message),
+        positiveText = getString(positiveText),
+        positiveCallback = positiveCallback,
+        negativeText = getString(negativeText),
+        negativeCallback = negativeCallback
+    )
+}
+
+fun Fragment.makeAlertDialog(
+    title: String,
+    message: String,
+    positiveCallback: () -> Unit,
+    negativeCallback: () -> Unit,
+    positiveText: String = getString(R.string.yes),
+    negativeText: String = getString(R.string.no),
+) {
+    AlertDialog.Builder(context)
+        .setTitle(title)
+        .setMessage(message)
+        .setPositiveButton(positiveText) { _, _ -> positiveCallback() }
+        .setNegativeButton(negativeText) { _, _ -> negativeCallback() }
+        .show()
+}
 
 // Отображение Toast уведомления со строкой из ресурсов
 fun Fragment.makeToast(@StringRes message: Int) {
@@ -64,8 +99,8 @@ fun <T> LiveData<Event<T>>.observeEvent(
 }
 
 /**
-* Наблюдение за [UiState.Failure].
-* */
+ * Наблюдение за [UiState.Failure].
+ * */
 fun LiveData<Event<UiState>>.observeFailure(
     lifecycleOwner: LifecycleOwner,
     observer: (value: Failure) -> Unit

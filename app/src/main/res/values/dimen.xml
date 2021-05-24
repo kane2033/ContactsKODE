@@ -4,4 +4,10 @@
     <dimen name="half_def_margin">8dp</dimen>
     <dimen name="item_text_margin">8dp</dimen>
     <dimen name="round_corner_radius">8dp</dimen>
+
+    <dimen name="contact_input_margin_start">32dp</dimen>
+    <dimen name="contact_input_margin_top">26dp</dimen>
+    <dimen name="contact_input_margin_end">93dp</dimen>
+    <dimen name="contact_input_margin_end_small">150dp</dimen>
+    <dimen name="contact_edit_icon_size">24dp</dimen>
 </resources>
