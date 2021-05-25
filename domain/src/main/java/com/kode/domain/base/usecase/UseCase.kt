@@ -2,8 +2,7 @@ package com.kode.domain.base.usecase
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
 /**
@@ -19,9 +18,14 @@ abstract class UseCase<in Param, out Type> {
 
     // "invoke" упакует результат run в flow и result
     suspend operator fun invoke(param: Param): Flow<Result<Type>> {
-        return flowOf(Result.success(run(param))).catch { e ->
-            e.printStackTrace()
-            emit(Result.failure(e))
+        return flow {
+            val result = try {
+                Result.success(run(param))
+            } catch (e: Throwable) {
+                e.printStackTrace()
+                Result.failure(e)
+            }
+            emit(result)
         }.flowOn(Dispatchers.IO)
     }
 }
