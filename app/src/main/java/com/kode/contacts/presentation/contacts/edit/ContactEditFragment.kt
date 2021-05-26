@@ -2,6 +2,7 @@ package com.kode.contacts.presentation.contacts.edit
 
 import android.os.Bundle
 import android.view.*
+import android.widget.ArrayAdapter
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -14,6 +15,7 @@ import com.kode.contacts.presentation.base.extension.makeAlertDialog
 import com.kode.contacts.presentation.base.extension.makeSnackBar
 import com.kode.contacts.presentation.base.extension.observeFailure
 import com.kode.contacts.presentation.base.extension.openFailureView
+import com.kode.contacts.presentation.contacts.ContactsBindingAdapters.getPhoneTypesTranslation
 import com.kode.domain.base.exception.info.SmallFailureInfo
 import com.kode.domain.validation.constraint.ValidationConstraint
 import com.kode.domain.validation.exception.ValidationFailure
@@ -41,6 +43,15 @@ class ContactEditFragment : Fragment(R.layout.fragment_contact_edit) {
             }
             changeAvatarButton.setOnClickListener(changeAvatar)
             avatarView.setOnClickListener(changeAvatar)
+
+            val array = resources.getPhoneTypesTranslation().values.toTypedArray()
+            // Адаптер для типа телефона (выбираем enum)
+            val adapter = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_spinner_dropdown_item,
+                array
+            )
+            phoneTypeAutoComplete.setAdapter(adapter)
         }
 
         viewModel.uiState.observeFailure(viewLifecycleOwner, {

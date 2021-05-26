@@ -92,7 +92,8 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/phoneTypeInputLayout"
-                style="@style/contact_edit_text"
+                app:boxBackgroundColor="@android:color/transparent"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/contact_input_margin_top"
@@ -102,14 +103,14 @@
                 app:layout_constraintStart_toStartOf="@id/phoneNumberInputLayout"
                 app:layout_constraintTop_toBottomOf="@id/phoneNumberInputLayout">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/phoneTypeEditText"
+                <AutoCompleteTextView
+                    android:id="@+id/phoneTypeAutoComplete"
                     style="@style/TextAppearance.MaterialComponents.Body2"
+                    android:hint="@string/phone_type_hint"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:constraint="@{notEmpty}"
-                    app:errorText="@{@string/phone_type_error}"
-                    android:text="@={viewModel.contactForm.phoneNumber.type}"
+                    app:phoneType="@={viewModel.contactForm.phoneNumber.type}"
+                    android:inputType="none"
                     tools:text="Mobile" />
             </com.google.android.material.textfield.TextInputLayout>
 

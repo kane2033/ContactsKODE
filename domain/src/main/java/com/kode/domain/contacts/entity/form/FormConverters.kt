@@ -15,5 +15,5 @@ fun Contact.toForm() = ContactForm(
 private fun PhoneNumber.toForm() = PhoneNumberForm(
     id = id,
     number = number,
-    type = type.toString()
+    type = type
 )
