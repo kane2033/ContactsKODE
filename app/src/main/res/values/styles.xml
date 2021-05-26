@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="item_layout_card">
         <item name="cardElevation">4dp</item>
@@ -38,5 +38,15 @@
         <item name="android:textColor">?attr/colorSecondary</item>
         <item name="android:lineSpacingExtra">8sp</item>
         <item name="cornerRadius">8dp</item>
+    </style>
+
+    <style name="bottom_sheet_item" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:background">@drawable/abc_btn_borderless_material</item>
+        <item name="android:layout_marginHorizontal" tools:ignore="NewApi">20dp</item>
+        <item name="android:layout_marginVertical" tools:ignore="NewApi">30dp</item>
+        <item name="android:drawablePadding">34dp</item>
+        <item name="android:gravity">center_vertical|start</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 </resources>

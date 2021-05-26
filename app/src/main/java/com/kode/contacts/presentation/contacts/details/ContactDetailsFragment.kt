@@ -15,11 +15,13 @@ import com.kode.contacts.presentation.base.adapter.ItemClickedInterface
 import com.kode.contacts.presentation.base.extension.makeSnackBar
 import com.kode.contacts.presentation.base.extension.observeFailure
 import com.kode.contacts.presentation.base.extension.openFailureView
+import com.kode.contacts.presentation.contacts.photo.GetPictureClickListener
 import com.kode.domain.contacts.entity.PhoneNumber
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class ContactDetailsFragment : Fragment(R.layout.fragment_contact_details) {
+class ContactDetailsFragment : Fragment(R.layout.fragment_contact_details),
+    GetPictureClickListener {
 
     private val binding: FragmentContactDetailsBinding by viewBinding(FragmentContactDetailsBinding::bind)
 
@@ -42,11 +44,15 @@ class ContactDetailsFragment : Fragment(R.layout.fragment_contact_details) {
             phoneNumbersRecyclerView.adapter = adapter
 
             editContactButton.setOnClickListener {
-                //val title = getString(ContactEditFragment.getTitle(ContactEditFragment.Mode.EDIT))
                 val action =
                     ContactDetailsFragmentDirections.actionContactDetailsFragmentToContactEditFragment(
                         contact = this@ContactDetailsFragment.viewModel.contact.value
                     )
+                findNavController().navigate(action)
+            }
+            photoView.setOnClickListener {
+                val action =
+                    ContactDetailsFragmentDirections.actionContactDetailsFragmentToGetPictureBottomSheetDialog()
                 findNavController().navigate(action)
             }
         }
@@ -60,6 +66,14 @@ class ContactDetailsFragment : Fragment(R.layout.fragment_contact_details) {
         })
 
         setHasOptionsMenu(true)
+    }
+
+    override fun onTakePicture() {
+        // viewModel.takePicture()
+    }
+
+    override fun onChoosePicture() {
+        // viewModel.choosePicture()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

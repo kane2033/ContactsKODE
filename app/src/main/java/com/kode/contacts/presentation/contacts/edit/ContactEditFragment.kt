@@ -13,13 +13,14 @@ import com.kode.contacts.R
 import com.kode.contacts.databinding.FragmentContactEditBinding
 import com.kode.contacts.presentation.base.extension.*
 import com.kode.contacts.presentation.contacts.ContactsBindingAdapters.getPhoneTypesTranslation
+import com.kode.contacts.presentation.contacts.photo.GetPictureClickListener
 import com.kode.domain.base.exception.info.SmallFailureInfo
 import com.kode.domain.validation.constraint.ValidationConstraint
 import com.kode.domain.validation.exception.ValidationFailure
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class ContactEditFragment : Fragment(R.layout.fragment_contact_edit) {
+class ContactEditFragment : Fragment(R.layout.fragment_contact_edit), GetPictureClickListener {
 
     private val binding: FragmentContactEditBinding by viewBinding(FragmentContactEditBinding::bind)
 
@@ -35,11 +36,13 @@ class ContactEditFragment : Fragment(R.layout.fragment_contact_edit) {
             viewModel = this@ContactEditFragment.viewModel
             notEmpty = ValidationConstraint.NotEmpty
 
-            val changeAvatar = View.OnClickListener {
-                // viewModel.changeAvatar()
+            val openGetPictureDialog = View.OnClickListener {
+                val action =
+                    ContactEditFragmentDirections.actionContactEditFragmentToGetPictureBottomSheetDialog()
+                findNavController().navigate(action)
             }
-            changeAvatarButton.setOnClickListener(changeAvatar)
-            avatarView.setOnClickListener(changeAvatar)
+            changeAvatarButton.setOnClickListener(openGetPictureDialog)
+            avatarView.setOnClickListener(openGetPictureDialog)
 
             val array = resources.getPhoneTypesTranslation().values.toTypedArray()
             // Адаптер для типа телефона (выбираем enum)
@@ -84,7 +87,9 @@ class ContactEditFragment : Fragment(R.layout.fragment_contact_edit) {
                     title = R.string.contact_unsaved_title,
                     message = R.string.contact_unsaved,
                     positiveCallback = { findNavController().popBackStack() },
-                    negativeCallback = { }
+                    negativeCallback = { },
+                    positiveText = R.string.yes,
+                    negativeText = R.string.no
                 )
             } else {
                 findNavController().popBackStack()
@@ -92,6 +97,16 @@ class ContactEditFragment : Fragment(R.layout.fragment_contact_edit) {
         }
 
         setHasOptionsMenu(true)
+    }
+
+    override fun onTakePicture() {
+        makeSnackBar("Take picture clicked")
+        // viewModel.takePicture()
+    }
+
+    override fun onChoosePicture() {
+        makeSnackBar("Choose picture clicked")
+        // viewModel.choosePicture()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -135,7 +150,9 @@ class ContactEditFragment : Fragment(R.layout.fragment_contact_edit) {
             title = R.string.contact_deletion_title,
             message = R.string.contact_deletion,
             positiveCallback = { doContactDeletion() },
-            negativeCallback = { }
+            negativeCallback = { },
+            positiveText = R.string.yes,
+            negativeText = R.string.no
         )
     }
 }

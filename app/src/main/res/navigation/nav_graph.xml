@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_contactDetailsFragment_to_contactEditFragment"
             app:destination="@id/contactEditFragment" />
+        <action
+            android:id="@+id/action_contactDetailsFragment_to_getPictureBottomSheetDialog"
+            app:destination="@id/getPictureBottomSheetDialog" />
     </fragment>
 
     <fragment
@@ -45,7 +48,15 @@
             app:destination="@id/contactsListFragment"
             app:popUpTo="@id/contactsListFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_contactEditFragment_to_getPictureBottomSheetDialog"
+            app:destination="@id/getPictureBottomSheetDialog" />
     </fragment>
+
+    <dialog
+        android:id="@+id/getPictureBottomSheetDialog"
+        android:name="com.kode.contacts.presentation.contacts.photo.GetPictureBottomSheetDialog"
+        tools:layout="@layout/fragment_dialog_get_picture" />
 
     <dialog
         android:id="@+id/failureFragment"
@@ -59,6 +70,5 @@
     <action
         android:id="@+id/action_global_failureFragment"
         app:destination="@id/failureFragment" />
-
 
 </navigation>

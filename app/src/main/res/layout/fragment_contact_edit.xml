@@ -106,9 +106,9 @@
                 <AutoCompleteTextView
                     android:id="@+id/phoneTypeAutoComplete"
                     style="@style/TextAppearance.MaterialComponents.Body2"
-                    android:hint="@string/phone_type_hint"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:labelFor="@id/phoneTypeInputLayout"
                     app:phoneType="@={viewModel.contactForm.phoneNumber.type}"
                     android:inputType="none"
                     tools:text="Mobile" />

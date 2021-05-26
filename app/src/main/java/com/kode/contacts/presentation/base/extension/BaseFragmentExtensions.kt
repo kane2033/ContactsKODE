@@ -22,37 +22,40 @@ import com.kode.domain.base.exception.info.FullScreenFailureInfo
 import com.kode.domain.base.exception.info.SmallFailureInfo
 
 fun Fragment.makeAlertDialog(
-    @StringRes title: Int,
+    @StringRes title: Int? = null,
     @StringRes message: Int,
     positiveCallback: () -> Unit,
     negativeCallback: () -> Unit,
-    @StringRes positiveText: Int = R.string.yes,
-    @StringRes negativeText: Int = R.string.no,
+    @StringRes positiveText: Int = R.string.ok,
+    @StringRes negativeText: Int? = null,
 ) {
     makeAlertDialog(
-        title = getString(title),
+        title = title?.let { getString(it) },
         message = getString(message),
         positiveText = getString(positiveText),
         positiveCallback = positiveCallback,
-        negativeText = getString(negativeText),
+        negativeText = negativeText?.let { getString(negativeText) },
         negativeCallback = negativeCallback
     )
 }
 
 fun Fragment.makeAlertDialog(
-    title: String,
+    title: String? = null,
     message: String,
     positiveCallback: () -> Unit,
-    negativeCallback: () -> Unit,
-    positiveText: String = getString(R.string.yes),
-    negativeText: String = getString(R.string.no),
+    negativeCallback: (() -> Unit)? = null,
+    positiveText: String = getString(R.string.ok),
+    negativeText: String? = null,
 ) {
-    AlertDialog.Builder(context)
+    val baseAlertDialog = AlertDialog.Builder(context)
         .setTitle(title)
         .setMessage(message)
         .setPositiveButton(positiveText) { _, _ -> positiveCallback() }
-        .setNegativeButton(negativeText) { _, _ -> negativeCallback() }
-        .show()
+    // Негативный коллбек и текст опциональны
+    if (negativeCallback != null && negativeText != null) {
+        baseAlertDialog.setNegativeButton(negativeText) { _, _ -> negativeCallback() }
+    }
+    baseAlertDialog.show()
 }
 
 // Отображение Toast уведомления со строкой из ресурсов
