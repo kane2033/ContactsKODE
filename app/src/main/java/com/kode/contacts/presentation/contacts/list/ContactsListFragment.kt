@@ -28,7 +28,7 @@ class ContactsListFragment : Fragment(R.layout.fragment_contacts_list) {
 
         val onContactClicked = ItemClickedInterface<Contact> {
             val action =
-                ContactsListFragmentDirections.actionContactsListFragmentToContactDetailsFragment(it)
+                ContactsListFragmentDirections.actionContactsListFragmentToContactDetailsFragment(it.id)
             findNavController().navigate(action)
         }
 
@@ -40,7 +40,6 @@ class ContactsListFragment : Fragment(R.layout.fragment_contacts_list) {
             recyclerView.adapter = adapter
 
             addContactButton.setOnClickListener {
-                //val title = getString(ContactEditFragment.getTitle(ContactEditFragment.Mode.CREATE))
                 val action =
                     ContactsListFragmentDirections.actionContactsListFragmentToContactEditFragment()
                 findNavController().navigate(action)

@@ -8,6 +8,7 @@ import com.kode.domain.contacts.datasource.ContactsDataSource
 import com.kode.domain.contacts.entity.Contact
 import com.kode.domain.contacts.usecase.CreateContact
 import com.kode.domain.contacts.usecase.DeleteContact
+import com.kode.domain.contacts.usecase.FetchContactById
 import com.kode.domain.contacts.usecase.FetchContactsList
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -18,11 +19,12 @@ object ContactsModule {
         single<ContactsDataSource> { ContactsDataSourceImpl(androidContext()) }
 
         single { FetchContactsList(get()) }
+        single { FetchContactById(get()) }
         single { CreateContact(get()) }
         single { DeleteContact(get()) }
 
         viewModel { ContactsListViewModel(get()) }
-        viewModel { ContactDetailsViewModel(get()) }
+        viewModel { ContactDetailsViewModel(get(), get()) }
         viewModel { (contact: Contact) -> ContactEditViewModel(contact, get(), get()) }
     }
 }

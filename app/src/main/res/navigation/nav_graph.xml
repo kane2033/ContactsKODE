@@ -24,8 +24,8 @@
         android:label=""
         tools:layout="@layout/fragment_contact_details">
         <argument
-            android:name="selectedContact"
-            app:argType="com.kode.domain.contacts.entity.Contact" />
+            android:name="selectedContactId"
+            app:argType="long" />
         <action
             android:id="@+id/action_contactDetailsFragment_to_contactEditFragment"
             app:destination="@id/contactEditFragment" />

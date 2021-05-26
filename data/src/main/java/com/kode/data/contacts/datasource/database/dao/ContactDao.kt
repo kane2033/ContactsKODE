@@ -8,6 +8,11 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ContactDao {
+
+    @Transaction
+    @Query("SELECT * FROM ContactEntity WHERE contactId=:id")
+    fun getContactById(id: Long): Flow<ContactWithPhoneNumbersEntity>
+
     @Transaction
     @Query("SELECT * FROM ContactEntity")
     fun getAll(): Flow<List<ContactWithPhoneNumbersEntity>>

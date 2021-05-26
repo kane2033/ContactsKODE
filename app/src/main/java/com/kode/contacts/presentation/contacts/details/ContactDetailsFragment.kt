@@ -25,7 +25,7 @@ class ContactDetailsFragment : Fragment(R.layout.fragment_contact_details) {
 
     private val args: ContactDetailsFragmentArgs by navArgs()
 
-    private val viewModel: ContactDetailsViewModel by viewModel { parametersOf(args.selectedContact) }
+    private val viewModel: ContactDetailsViewModel by viewModel { parametersOf(args.selectedContactId) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
