@@ -14,7 +14,7 @@ class ContactsAdapter(clickListener: ItemClickedInterface<Contact>) :
             oldItem === newItem
 
         override fun areContentsTheSame(oldItem: Contact, newItem: Contact): Boolean =
-            "${oldItem.firstName} + ${oldItem.lastName}" == "${newItem.firstName} + ${newItem.lastName}"
+            oldItem.id == newItem.id
     }
 
     override fun getItemViewType(position: Int) = R.layout.item_contact

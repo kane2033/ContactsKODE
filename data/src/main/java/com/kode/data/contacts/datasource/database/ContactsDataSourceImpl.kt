@@ -26,4 +26,8 @@ class ContactsDataSourceImpl(context: Context) : ContactsDataSource {
     override suspend fun addContact(contact: Contact) {
         return database.contactDao().insertContactWithPhones(contact.toDbEntity())
     }
+
+    override suspend fun deleteContact(contact: Contact) {
+        return database.contactDao().deleteContactWithPhones(contact.toDbEntity())
+    }
 }

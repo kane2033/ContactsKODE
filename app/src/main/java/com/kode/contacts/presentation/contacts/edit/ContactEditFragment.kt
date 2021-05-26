@@ -14,6 +14,9 @@ import com.kode.contacts.presentation.base.extension.makeAlertDialog
 import com.kode.contacts.presentation.base.extension.makeSnackBar
 import com.kode.contacts.presentation.base.extension.observeFailure
 import com.kode.contacts.presentation.base.extension.openFailureView
+import com.kode.domain.base.exception.info.SmallFailureInfo
+import com.kode.domain.validation.constraint.ValidationConstraint
+import com.kode.domain.validation.exception.ValidationFailure
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -31,6 +34,7 @@ class ContactEditFragment : Fragment(R.layout.fragment_contact_edit) {
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             viewModel = this@ContactEditFragment.viewModel
+            notEmpty = ValidationConstraint.NotEmpty
 
             val changeAvatar = View.OnClickListener {
                 // viewModel.changeAvatar()
@@ -40,7 +44,16 @@ class ContactEditFragment : Fragment(R.layout.fragment_contact_edit) {
         }
 
         viewModel.uiState.observeFailure(viewLifecycleOwner, {
-            openFailureView(it)
+            openFailureView(it) { failure ->
+                when (failure) {
+                    is ValidationFailure -> SmallFailureInfo(
+                        retryClickedCallback = {},
+                        text = getString(R.string.error_validation),
+                        buttonText = getString(R.string.ok)
+                    )
+                    else -> null
+                }
+            }
         })
 
         // Установка заголовка и левой кнопки (на галочку) тулбара
@@ -56,13 +69,18 @@ class ContactEditFragment : Fragment(R.layout.fragment_contact_edit) {
 
         // При нажатии "Назад"
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            // Предупреждаем о несохраненных изменениях через alertDialog
-            makeAlertDialog(
-                title = R.string.contact_unsaved_title,
-                message = R.string.contact_unsaved,
-                positiveCallback = { findNavController().popBackStack() },
-                negativeCallback = { }
-            )
+            // Если есть заполненные поля
+            if (viewModel.hasUnsavedChanges()) {
+                // Предупреждаем о несохраненных изменениях через alertDialog
+                makeAlertDialog(
+                    title = R.string.contact_unsaved_title,
+                    message = R.string.contact_unsaved,
+                    positiveCallback = { findNavController().popBackStack() },
+                    negativeCallback = { }
+                )
+            } else {
+                findNavController().popBackStack()
+            }
         }
 
         setHasOptionsMenu(true)
@@ -70,22 +88,43 @@ class ContactEditFragment : Fragment(R.layout.fragment_contact_edit) {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_contact_edit, menu)
+
+        // Прячем кнопку удаления, если контакт еще не создан
+        val deleteVisibility = viewModel.mode != ContactEditViewModel.Mode.CREATE
+        menu.findItem(R.id.deleteButton).isVisible = deleteVisibility
+
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                // viewModel.save()
+                viewModel.createContact { findNavController().popBackStack() }
+                return true // Отключение кнопки "назад"
             }
             R.id.deleteButton -> {
-                // viewModel.delete()
-                val action =
-                    ContactEditFragmentDirections.actionContactEditFragmentToContactsListFragment()
-                findNavController().navigate(action)
+                deleteContact()
             }
             R.id.inDevelopmentButton -> makeSnackBar(R.string.feature_in_development)
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    // Удаление контакта
+    // с вызовом уточняющего диалога
+    private fun deleteContact() {
+        val doContactDeletion = {
+            viewModel.deleteContact {
+                val action =
+                    ContactEditFragmentDirections.actionContactEditFragmentToContactsListFragment()
+                findNavController().navigate(action)
+            }
+        }
+        makeAlertDialog(
+            title = R.string.contact_deletion_title,
+            message = R.string.contact_deletion,
+            positiveCallback = { doContactDeletion() },
+            negativeCallback = { }
+        )
     }
 }

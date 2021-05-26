@@ -8,10 +8,12 @@ import com.kode.domain.contacts.entity.PhoneNumber
 
 fun ContactWithPhoneNumbersEntity.toDomainEntity(): Contact {
     return Contact(
+        id = contact.contactId,
         firstName = contact.firstName,
         lastName = contact.lastName,
         phoneNumbers = phoneNumbers.map {
             PhoneNumber(
+                id = it.phoneNumberId,
                 number = it.number,
                 type = enumValueOf(it.type)
             )
@@ -28,6 +30,7 @@ fun List<ContactWithPhoneNumbersEntity>.toDomainEntityList(): List<Contact> {
 fun Contact.toDbEntity(): ContactWithPhoneNumbersEntity {
     return ContactWithPhoneNumbersEntity(
         contact = ContactEntity(
+            contactId = id,
             firstName = firstName,
             lastName = lastName,
             avatarFilePath = avatarFilePath,
@@ -35,6 +38,7 @@ fun Contact.toDbEntity(): ContactWithPhoneNumbersEntity {
         ),
         phoneNumbers = phoneNumbers.map {
             PhoneNumberEntity(
+                phoneNumberId = id,
                 number = it.number,
                 type = it.type.name
             )

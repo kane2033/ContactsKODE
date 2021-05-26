@@ -136,10 +136,7 @@ fun Fragment.openFailureView(
         // Открываем снекбар
         is SmallFailureInfo -> openFailureSnackBar(failureInfo)
         // Если инфа об ошибке не указана (null), показываем базовую в полном экране
-        null -> FullScreenFailureInfo(
-            getString(R.string.error_base_title),
-            getString(R.string.error_base)
-        )
+        null -> openFailureSnackBar(SmallFailureInfo({}, getString(R.string.error_base_title)))
     }
 }
 

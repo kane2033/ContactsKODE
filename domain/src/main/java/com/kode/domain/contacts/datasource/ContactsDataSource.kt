@@ -7,4 +7,5 @@ interface ContactsDataSource {
     fun getAllContacts(): Flow<List<Contact>>
     suspend fun addContactsList(contacts: List<Contact>)
     suspend fun addContact(contact: Contact)
+    suspend fun deleteContact(contact: Contact)
 }

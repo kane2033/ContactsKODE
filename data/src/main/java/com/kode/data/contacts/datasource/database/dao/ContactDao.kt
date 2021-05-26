@@ -22,6 +22,12 @@ interface ContactDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPhoneNumbersEntities(phoneNumbers: List<PhoneNumberEntity>)
 
+    @Delete
+    suspend fun deleteContactEntity(contact: ContactEntity): Int
+
+    @Delete
+    suspend fun deletePhoneNumbersEntities(phoneNumbers: List<PhoneNumberEntity>)
+
     @Transaction
     suspend fun insertContactsListWithPhones(contacts: List<ContactWithPhoneNumbersEntity>) {
         contacts.forEach { insertContactWithPhones(it) }
@@ -29,11 +35,32 @@ interface ContactDao {
 
     @Transaction
     suspend fun insertContactWithPhones(contact: ContactWithPhoneNumbersEntity) {
+        contactWithPhoneNumbersTransaction(
+            contact = contact,
+            contactQuery = this::insertContactEntity,
+            phoneNumbersQuery = this::insertPhoneNumbersEntities
+        )
+    }
+
+    @Transaction
+    suspend fun deleteContactWithPhones(contact: ContactWithPhoneNumbersEntity) {
+        contactWithPhoneNumbersTransaction(
+            contact = contact,
+            contactQuery = { deleteContactEntity(contact.contact).toLong() },
+            phoneNumbersQuery = this::deletePhoneNumbersEntities
+        )
+    }
+
+    private suspend fun contactWithPhoneNumbersTransaction(
+        contact: ContactWithPhoneNumbersEntity,
+        contactQuery: suspend (contact: ContactEntity) -> Long,
+        phoneNumbersQuery: suspend (phoneNumbers: List<PhoneNumberEntity>) -> Unit
+    ) {
         val contactEntity = contact.contact
         val phoneEntities = contact.phoneNumbers
 
-        val contactId = insertContactEntity(contactEntity)
+        val contactId = contactQuery(contactEntity)
         phoneEntities.forEach { it.phoneOwnerId = contactId }
-        insertPhoneNumbersEntities(phoneEntities)
+        phoneNumbersQuery(phoneEntities)
     }
 }

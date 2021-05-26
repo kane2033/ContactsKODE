@@ -14,7 +14,7 @@ class PhoneNumberAdapter(clickListener: ItemClickedInterface<PhoneNumber>) :
             oldItem === newItem
 
         override fun areContentsTheSame(oldItem: PhoneNumber, newItem: PhoneNumber): Boolean =
-            oldItem.number == newItem.number
+            oldItem.id == newItem.id
     }
 
     override fun getItemViewType(position: Int) = R.layout.item_phone_number
