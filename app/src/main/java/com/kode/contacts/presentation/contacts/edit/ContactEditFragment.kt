@@ -11,10 +11,7 @@ import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.kode.contacts.R
 import com.kode.contacts.databinding.FragmentContactEditBinding
-import com.kode.contacts.presentation.base.extension.makeAlertDialog
-import com.kode.contacts.presentation.base.extension.makeSnackBar
-import com.kode.contacts.presentation.base.extension.observeFailure
-import com.kode.contacts.presentation.base.extension.openFailureView
+import com.kode.contacts.presentation.base.extension.*
 import com.kode.contacts.presentation.contacts.ContactsBindingAdapters.getPhoneTypesTranslation
 import com.kode.domain.base.exception.info.SmallFailureInfo
 import com.kode.domain.validation.constraint.ValidationConstraint
@@ -110,7 +107,10 @@ class ContactEditFragment : Fragment(R.layout.fragment_contact_edit) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                viewModel.createContact { findNavController().popBackStack() }
+                viewModel.createContact {
+                    findNavController().popBackStack()
+                    hideKeyboard()
+                }
                 return true // Отключение кнопки "назад"
             }
             R.id.deleteButton -> {

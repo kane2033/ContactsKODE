@@ -1,7 +1,10 @@
 package com.kode.contacts.presentation.base.extension
 
+import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
@@ -154,4 +157,14 @@ private fun Fragment.openFailureSnackBar(failureInfo: SmallFailureInfo) {
         failureInfo.buttonText ?: getString(R.string.retry),
         failureInfo.retryClickedCallback
     )
+}
+
+fun Fragment.hideKeyboard() {
+    view?.let { activity?.hideKeyboard(it) }
+}
+
+private fun Context.hideKeyboard(view: View) {
+    val inputMethodManager =
+        getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
 }
