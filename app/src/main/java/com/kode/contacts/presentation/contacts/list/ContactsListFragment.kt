@@ -14,6 +14,7 @@ import com.kode.contacts.presentation.base.adapter.ItemClickedInterface
 import com.kode.contacts.presentation.base.extension.makeSnackBar
 import com.kode.contacts.presentation.base.extension.observeFailure
 import com.kode.contacts.presentation.base.extension.openFailureView
+import com.kode.contacts.presentation.base.extension.setActionBarHomeIcon
 import com.kode.domain.contacts.entity.Contact
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -53,6 +54,12 @@ class ContactsListFragment : Fragment(R.layout.fragment_contacts_list) {
         viewModel.uiState.observeFailure(viewLifecycleOwner, {
             openFailureView(it)
         })
+
+        findNavController().addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.contactEditFragment) {
+                setActionBarHomeIcon(R.drawable.ic_done)
+            }
+        }
 
         setHasOptionsMenu(true)
     }

@@ -40,6 +40,10 @@ class ContactEditViewModel(
         }
     }
 
+    fun setAvatarPath(path: String) {
+        contactForm.value?.avatarFilePath = path
+    }
+
     fun hasUnsavedChanges() = when (mode) {
         Mode.CREATE -> contactForm.value?.isEmpty() == false
         Mode.EDIT -> contactForm.value?.isEqualsToContact(contact) == false

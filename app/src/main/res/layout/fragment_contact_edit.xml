@@ -41,9 +41,11 @@
                 android:layout_marginStart="34dp"
                 android:contentDescription="@string/contact_image_description"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_avatar_border"
+                app:defaultSrc="@{@drawable/ic_avatar_border}"
+                app:imageFilePath="@{viewModel.contactForm.avatarFilePath}"
                 app:layout_constraintStart_toEndOf="@id/photoIconView"
-                app:layout_constraintTop_toTopOf="@id/photoIconView" />
+                app:layout_constraintTop_toTopOf="@id/photoIconView"
+                tools:src="@drawable/ic_avatar_border" />
 
             <Button
                 android:id="@+id/changeAvatarButton"
@@ -92,13 +94,13 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/phoneTypeInputLayout"
-                app:boxBackgroundColor="@android:color/transparent"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/contact_input_margin_top"
                 android:layout_marginEnd="@dimen/contact_input_margin_end_small"
                 android:hint="@string/phone_type_hint"
+                app:boxBackgroundColor="@android:color/transparent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/phoneNumberInputLayout"
                 app:layout_constraintTop_toBottomOf="@id/phoneNumberInputLayout">
@@ -108,10 +110,11 @@
                     style="@style/TextAppearance.MaterialComponents.Body2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="none"
                     android:labelFor="@id/phoneTypeInputLayout"
                     app:phoneType="@={viewModel.contactForm.phoneNumber.type}"
-                    android:inputType="none"
-                    tools:text="Mobile" />
+                    tools:text="Mobile"
+                    tools:ignore="LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <ImageView

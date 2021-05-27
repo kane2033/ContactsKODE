@@ -1,9 +1,11 @@
 package com.kode.contacts.presentation.contacts.edit
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.widget.ArrayAdapter
 import androidx.activity.addCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -27,6 +29,20 @@ class ContactEditFragment : Fragment(R.layout.fragment_contact_edit), GetPicture
     private val args: ContactEditFragmentArgs by navArgs()
 
     private val viewModel: ContactEditViewModel by viewModel { parametersOf(args.contact) }
+
+    companion object {
+        private const val IMAGE_MIME = "image/*"
+    }
+
+    private val getPicture =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            viewModel.setAvatarPath(uri.toString())
+            binding.avatarView.setImageURI(uri)
+        }
+
+    private val takePicture = registerForActivityResult(ActivityResultContracts.TakePicture()) {
+
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -105,7 +121,7 @@ class ContactEditFragment : Fragment(R.layout.fragment_contact_edit), GetPicture
     }
 
     override fun onChoosePicture() {
-        makeSnackBar("Choose picture clicked")
+        getPicture.launch(IMAGE_MIME)
         // viewModel.choosePicture()
     }
 

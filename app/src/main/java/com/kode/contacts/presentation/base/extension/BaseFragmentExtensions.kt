@@ -6,7 +6,9 @@ import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -170,4 +172,8 @@ private fun Context.hideKeyboard(view: View) {
     val inputMethodManager =
         getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+}
+
+fun Fragment.setActionBarHomeIcon(@DrawableRes drawableRes: Int) {
+    (activity as? AppCompatActivity)?.supportActionBar?.setHomeAsUpIndicator(drawableRes)
 }

@@ -1,13 +1,28 @@
 package com.kode.contacts.presentation.base.adapter
 
+import android.graphics.drawable.Drawable
+import android.net.Uri
+import android.widget.ImageView
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.databinding.BindingAdapter
+import com.kode.domain.base.Event
+import com.kode.domain.base.UiState
 
 object BindingAdapters {
 
     @JvmStatic
     @BindingAdapter(value = ["loading"])
-    fun ContentLoadingProgressBar.setLoading(isLoading: Boolean) {
-        if (isLoading) this.show() else this.hide()
+    fun ContentLoadingProgressBar.setLoading(uiState: Event<UiState>?) {
+        if (uiState?.peekContent() is UiState.Loading) this.show() else this.hide()
+    }
+
+    @JvmStatic
+    @BindingAdapter(value = ["imageFilePath", "defaultSrc"], requireAll = false)
+    fun ImageView.setImageFromUri(path: String?, defaultSrc: Drawable?) {
+        if (path != null) {
+            setImageURI(Uri.parse(path))
+        } else {
+            setImageDrawable(defaultSrc)
+        }
     }
 }

@@ -15,13 +15,11 @@ import com.kode.contacts.presentation.base.adapter.ItemClickedInterface
 import com.kode.contacts.presentation.base.extension.makeSnackBar
 import com.kode.contacts.presentation.base.extension.observeFailure
 import com.kode.contacts.presentation.base.extension.openFailureView
-import com.kode.contacts.presentation.contacts.photo.GetPictureClickListener
 import com.kode.domain.contacts.entity.PhoneNumber
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class ContactDetailsFragment : Fragment(R.layout.fragment_contact_details),
-    GetPictureClickListener {
+class ContactDetailsFragment : Fragment(R.layout.fragment_contact_details) {
 
     private val binding: FragmentContactDetailsBinding by viewBinding(FragmentContactDetailsBinding::bind)
 
@@ -50,11 +48,6 @@ class ContactDetailsFragment : Fragment(R.layout.fragment_contact_details),
                     )
                 findNavController().navigate(action)
             }
-            photoView.setOnClickListener {
-                val action =
-                    ContactDetailsFragmentDirections.actionContactDetailsFragmentToGetPictureBottomSheetDialog()
-                findNavController().navigate(action)
-            }
         }
 
         viewModel.contact.observe(viewLifecycleOwner, {
@@ -66,14 +59,6 @@ class ContactDetailsFragment : Fragment(R.layout.fragment_contact_details),
         })
 
         setHasOptionsMenu(true)
-    }
-
-    override fun onTakePicture() {
-        // viewModel.takePicture()
-    }
-
-    override fun onChoosePicture() {
-        // viewModel.choosePicture()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

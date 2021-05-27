@@ -34,11 +34,13 @@
                     android:layout_marginTop="@dimen/def_margin"
                     android:contentDescription="@string/contact_image_description"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_avatar_border"
+                    app:defaultSrc="@{@drawable/ic_avatar_border}"
+                    app:imageFilePath="@{viewModel.contact.avatarFilePath}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:shapeAppearanceOverlay="@style/roundedCornersImageView" />
+                    app:shapeAppearanceOverlay="@style/roundedCornersImageView"
+                    tools:src="@drawable/ic_avatar_border" />
 
                 <TextView
                     android:id="@+id/nameView"

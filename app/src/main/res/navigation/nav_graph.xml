@@ -29,9 +29,6 @@
         <action
             android:id="@+id/action_contactDetailsFragment_to_contactEditFragment"
             app:destination="@id/contactEditFragment" />
-        <action
-            android:id="@+id/action_contactDetailsFragment_to_getPictureBottomSheetDialog"
-            app:destination="@id/getPictureBottomSheetDialog" />
     </fragment>
 
     <fragment
