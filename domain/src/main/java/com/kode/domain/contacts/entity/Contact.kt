@@ -1,5 +1,6 @@
 package com.kode.domain.contacts.entity
 
+import android.net.Uri
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
@@ -9,6 +10,6 @@ data class Contact(
     val firstName: String,
     val lastName: String?,
     val phoneNumbers: List<PhoneNumber>,
-    val avatarFilePath: String?, // Как хранить аватарку??
-    val toneFilePath: String?
+    val avatarUri: Uri?,
+    val toneUri: Uri?
 ) : Parcelable

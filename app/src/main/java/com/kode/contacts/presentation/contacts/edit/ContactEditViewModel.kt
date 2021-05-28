@@ -1,5 +1,6 @@
 package com.kode.contacts.presentation.contacts.edit
 
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,13 +14,17 @@ import com.kode.domain.contacts.entity.form.ContactForm
 import com.kode.domain.contacts.entity.form.toForm
 import com.kode.domain.contacts.usecase.CreateContact
 import com.kode.domain.contacts.usecase.DeleteContact
+import com.kode.domain.contacts.usecase.image.CreateImageFile
+import com.kode.domain.contacts.usecase.image.DeleteImage
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.launch
 
 class ContactEditViewModel(
     private val contact: Contact?,
     private val createContactUseCase: CreateContact,
-    private val deleteContactUseCase: DeleteContact
+    private val deleteContactUseCase: DeleteContact,
+    private val createImageFileUseCase: CreateImageFile,
+    private val deleteImageFileUseCase: DeleteImage
 ) : ViewModel() {
 
     private val _uiState = MutableLiveData<Event<UiState>>()
@@ -31,6 +36,11 @@ class ContactEditViewModel(
 
     val mode: Mode
 
+    // Хранит uri файла нового фото
+    // (take picture)
+    var newPicImageUri: Uri? = null
+        private set
+
     init {
         if (contact != null) {
             contactForm.value = contact.toForm()
@@ -40,9 +50,16 @@ class ContactEditViewModel(
         }
     }
 
-    fun setAvatarPath(path: String) {
-        contactForm.value?.avatarFilePath = path
+    fun setAvatarPathFromGallery(uri: Uri) {
+        contactForm.value?.setAvatarUriFrom(uri, ContactForm.AvatarSource.GALLERY)
     }
+
+    fun setAvatarPathFromCamera() {
+        newPicImageUri?.let {
+            contactForm.value?.setAvatarUriFrom(it, ContactForm.AvatarSource.CAMERA)
+        }
+    }
+
 
     fun hasUnsavedChanges() = when (mode) {
         Mode.CREATE -> contactForm.value?.isEmpty() == false
@@ -66,6 +83,29 @@ class ContactEditViewModel(
                 onSuccess = { callback() },
                 onFailure = { it.handleFailure(_uiState) }
             )
+        }
+    }
+
+    fun createImageFile(callback: (Uri) -> Unit) {
+        viewModelScope.launch {
+            createImageFileUseCase(Unit).loadingIndication(_uiState).single().fold(
+                onSuccess = {
+                    val (fileUri, providerUri) = it
+                    newPicImageUri = fileUri // Uri файла непосредственно
+                    callback(providerUri) // Uri, полученный через FileProvider (делимся файлом с камерой)
+                },
+                onFailure = { it.handleFailure(_uiState) }
+            )
+        }
+    }
+
+    fun deleteImageFile() {
+        val uri = newPicImageUri ?: return
+        newPicImageUri = null
+        viewModelScope.launch {
+            deleteImageFileUseCase(uri).loadingIndication(_uiState).single().onFailure {
+                it.handleFailure(_uiState)
+            }
         }
     }
 

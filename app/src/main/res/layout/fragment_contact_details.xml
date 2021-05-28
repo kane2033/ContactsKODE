@@ -35,7 +35,7 @@
                     android:contentDescription="@string/contact_image_description"
                     android:scaleType="centerCrop"
                     app:defaultSrc="@{@drawable/ic_avatar_border}"
-                    app:imageFilePath="@{viewModel.contact.avatarFilePath}"
+                    app:imageFilePath="@{viewModel.contact.avatarUri}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

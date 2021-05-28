@@ -18,9 +18,9 @@ object BindingAdapters {
 
     @JvmStatic
     @BindingAdapter(value = ["imageFilePath", "defaultSrc"], requireAll = false)
-    fun ImageView.setImageFromUri(path: String?, defaultSrc: Drawable?) {
-        if (path != null) {
-            setImageURI(Uri.parse(path))
+    fun ImageView.setImageFromUri(uri: Uri?, defaultSrc: Drawable?) {
+        if (uri != null) {
+            setImageURI(uri)
         } else {
             setImageDrawable(defaultSrc)
         }

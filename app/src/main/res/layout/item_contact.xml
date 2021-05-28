@@ -29,7 +29,7 @@
             android:layout_height="40dp"
             android:contentDescription="@string/contact_image_description"
             android:scaleType="centerCrop"
-            app:imageFilePath="@{item.avatarFilePath}"
+            app:imageFilePath="@{item.avatarUri}"
             app:defaultSrc="@{@drawable/ic_avatar_border}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

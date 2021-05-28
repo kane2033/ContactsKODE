@@ -11,11 +11,13 @@ class CreateContact(
     private val imagesDataSource: ImagesDataSource
 ) : UseCase<ContactForm, Unit>() {
     override suspend fun run(param: ContactForm) {
-        // Копируем картинку в память устройства
-        // и сохраняем путь к картинке в поле контакта
-        param.avatarFilePath?.let {
-            param.avatarFilePath = imagesDataSource.saveImageToInternal(it)
+        // Если аватар хранится в галерее (внешяя память),
+        // необходимо сохранить его во внутреннюю память приложения
+        val avatarFilePath = param.avatarUri
+        if (avatarFilePath != null && param.isAvatarStoredInGallery()) {
+            param.avatarUri = imagesDataSource.saveImageToInternal(avatarFilePath)
         }
+
         // Перед добавлением в бд,
         // производится валидация в конвертации из ContactForm в Contact
         contactsDataSource.addContact(param.toContact())

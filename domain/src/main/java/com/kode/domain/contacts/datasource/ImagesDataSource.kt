@@ -1,9 +1,16 @@
 package com.kode.domain.contacts.datasource
 
+import android.net.Uri
+import com.kode.domain.contacts.entity.image.ExternalFileUri
+
 interface ImagesDataSource {
     /**
-     * Сохранение во внутреннее хранилище картинки по пути [externalImageFilePath].
-     * @return Возвращает путь этой же картинки, сохраненной во внутреннем хранилище.
+     * Копирование во внутреннее хранилище картинки, хранящейся по [Uri] [externalImageUri].
+     * @return Возвращает [Uri] этой же картинки, сохраненной во внутреннем хранилище.
      * */
-    fun saveImageToInternal(externalImageFilePath: String): String?
+    fun saveImageToInternal(externalImageUri: Uri): Uri?
+
+    fun createImageFile(): ExternalFileUri
+
+    fun deleteImageFile(uri: Uri)
 }

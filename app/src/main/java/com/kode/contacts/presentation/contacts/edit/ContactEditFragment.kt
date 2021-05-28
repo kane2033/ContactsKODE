@@ -1,5 +1,6 @@
 package com.kode.contacts.presentation.contacts.edit
 
+import android.Manifest
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
@@ -32,16 +33,46 @@ class ContactEditFragment : Fragment(R.layout.fragment_contact_edit), GetPicture
 
     companion object {
         private const val IMAGE_MIME = "image/*"
+        private const val CAMERA_PERMISSION = Manifest.permission.CAMERA
     }
 
     private val getPicture =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-            viewModel.setAvatarPath(uri.toString())
-            binding.avatarView.setImageURI(uri)
+            uri?.let {
+                viewModel.setAvatarPathFromGallery(it)
+                binding.avatarView.setImageURI(it)
+            }
         }
 
-    private val takePicture = registerForActivityResult(ActivityResultContracts.TakePicture()) {
+    private val takePicture =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { pictureTaken ->
+            if (pictureTaken) {
+                viewModel.setAvatarPathFromCamera()
+                binding.avatarView.setImageURI(viewModel.newPicImageUri)
+            } else {
+                viewModel.deleteImageFile()
+            }
+        }
 
+    private val requestCameraPermission = permissionActivityResultContract(
+        onGranted = { onCameraPermissionGranted() },
+        onRejected = { makeSnackBar(R.string.take_picture_permission_required) }
+    )
+
+    private fun onCameraPermissionGranted() {
+        viewModel.createImageFile { uri -> takePicture.launch(uri) }
+    }
+
+    override fun onTakePicture() {
+        if (context.hasPermission(CAMERA_PERMISSION)) {
+            onCameraPermissionGranted()
+        } else {
+            requestCameraPermission.launch(CAMERA_PERMISSION)
+        }
+    }
+
+    override fun onChoosePicture() {
+        getPicture.launch(IMAGE_MIME)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -113,16 +144,6 @@ class ContactEditFragment : Fragment(R.layout.fragment_contact_edit), GetPicture
         }
 
         setHasOptionsMenu(true)
-    }
-
-    override fun onTakePicture() {
-        makeSnackBar("Take picture clicked")
-        // viewModel.takePicture()
-    }
-
-    override fun onChoosePicture() {
-        getPicture.launch(IMAGE_MIME)
-        // viewModel.choosePicture()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

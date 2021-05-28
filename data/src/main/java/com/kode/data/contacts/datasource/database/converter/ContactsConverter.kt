@@ -1,5 +1,6 @@
 package com.kode.data.contacts.datasource.database.converter
 
+import android.net.Uri
 import com.kode.data.contacts.datasource.database.entity.ContactEntity
 import com.kode.data.contacts.datasource.database.entity.ContactWithPhoneNumbersEntity
 import com.kode.data.contacts.datasource.database.entity.PhoneNumberEntity
@@ -18,8 +19,8 @@ fun ContactWithPhoneNumbersEntity.toDomainEntity(): Contact {
                 type = enumValueOf(it.type)
             )
         },
-        avatarFilePath = contact.avatarFilePath,
-        toneFilePath = contact.toneFilePath
+        avatarUri = contact.avatarFilePath?.let { Uri.parse(it) },
+        toneUri = contact.toneFilePath?.let { Uri.parse(it) }
     )
 }
 
@@ -33,8 +34,8 @@ fun Contact.toDbEntity(): ContactWithPhoneNumbersEntity {
             contactId = id,
             firstName = firstName,
             lastName = lastName,
-            avatarFilePath = avatarFilePath,
-            toneFilePath = toneFilePath
+            avatarFilePath = avatarUri?.path,
+            toneFilePath = toneUri?.path
         ),
         phoneNumbers = phoneNumbers.map {
             PhoneNumberEntity(

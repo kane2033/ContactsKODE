@@ -8,8 +8,8 @@ fun Contact.toForm() = ContactForm(
     firstName = firstName,
     lastName = lastName,
     phoneNumber = phoneNumbers[0].toForm(),
-    avatarFilePath = avatarFilePath,
-    toneFilePath = toneFilePath
+    avatarUri = avatarUri,
+    toneFilePath = toneUri?.path
 )
 
 private fun PhoneNumber.toForm() = PhoneNumberForm(
