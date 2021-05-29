@@ -1,6 +1,7 @@
 package com.kode.contacts.presentation.contacts.edit
 
 import android.Manifest
+import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
@@ -17,6 +18,7 @@ import com.kode.contacts.databinding.FragmentContactEditBinding
 import com.kode.contacts.presentation.base.extension.*
 import com.kode.contacts.presentation.contacts.ContactsBindingAdapters.getPhoneTypesTranslation
 import com.kode.contacts.presentation.contacts.photo.GetPictureClickListener
+import com.kode.data.contacts.datasource.database.extension.getFileName
 import com.kode.domain.base.exception.info.SmallFailureInfo
 import com.kode.domain.validation.constraint.ValidationConstraint
 import com.kode.domain.validation.exception.ValidationFailure
@@ -34,6 +36,11 @@ class ContactEditFragment : Fragment(R.layout.fragment_contact_edit), GetPicture
     companion object {
         private const val IMAGE_MIME = "image/*"
         private const val CAMERA_PERMISSION = Manifest.permission.CAMERA
+    }
+
+    private val getTone = registerForActivityResult(PickRingtoneContract()) { uri: Uri? ->
+        viewModel.contactForm.value?.toneUri = uri
+        binding.ringtoneEditText.setText(uri?.let { context?.contentResolver?.getFileName(it) })
     }
 
     private val getPicture =
@@ -99,6 +106,11 @@ class ContactEditFragment : Fragment(R.layout.fragment_contact_edit), GetPicture
                 array
             )
             phoneTypeAutoComplete.setAdapter(adapter)
+
+            ringtoneEditText.setOnClickListener {
+                getTone.launch(RingtoneManager.TYPE_RINGTONE)
+            }
+            ringtoneEditText.keyListener = null
         }
 
         viewModel.uiState.observeFailure(viewLifecycleOwner, {

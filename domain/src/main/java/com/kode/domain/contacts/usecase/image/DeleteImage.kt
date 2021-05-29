@@ -2,10 +2,10 @@ package com.kode.domain.contacts.usecase.image
 
 import android.net.Uri
 import com.kode.domain.base.usecase.UseCase
-import com.kode.domain.contacts.datasource.ImagesDataSource
+import com.kode.domain.contacts.datasource.FilesDataSource
 
-class DeleteImage(private val imagesDataSource: ImagesDataSource) : UseCase<Uri, Unit>() {
+class DeleteImage(private val filesDataSource: FilesDataSource) : UseCase<Uri, Unit>() {
     override suspend fun run(param: Uri) {
-        imagesDataSource.deleteImageFile(param)
+        filesDataSource.deleteFile(param)
     }
 }

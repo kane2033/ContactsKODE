@@ -188,22 +188,24 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/ringtoneInputLayout"
-                style="@style/contact_edit_text"
                 android:layout_width="0dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/contact_input_margin_start"
                 android:layout_marginEnd="@dimen/contact_input_margin_end"
                 android:hint="@string/ringtone_hint"
+                app:boxBackgroundColor="@android:color/transparent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ringtoneIconView"
                 app:layout_constraintTop_toTopOf="@id/ringtoneIconView">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <AutoCompleteTextView
                     android:id="@+id/ringtoneEditText"
-                    style="@style/TextAppearance.MaterialComponents.Body2"
                     android:layout_width="match_parent"
+                    style="@style/TextAppearance.MaterialComponents.Body2"
                     android:layout_height="wrap_content"
-                    android:text="@={viewModel.contactForm.toneFilePath}" />
+                    app:fileUriToName="@{viewModel.contactForm.toneUri}"
+                    tools:ignore="LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
 

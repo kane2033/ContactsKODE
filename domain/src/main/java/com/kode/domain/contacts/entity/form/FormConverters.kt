@@ -9,7 +9,7 @@ fun Contact.toForm() = ContactForm(
     lastName = lastName,
     phoneNumber = phoneNumbers[0].toForm(),
     avatarUri = avatarUri,
-    toneFilePath = toneUri?.path
+    toneUri = toneUri
 )
 
 private fun PhoneNumber.toForm() = PhoneNumberForm(

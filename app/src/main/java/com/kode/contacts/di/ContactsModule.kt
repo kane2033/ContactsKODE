@@ -5,9 +5,9 @@ import com.kode.contacts.presentation.contacts.details.ContactDetailsViewModel
 import com.kode.contacts.presentation.contacts.edit.ContactEditViewModel
 import com.kode.contacts.presentation.contacts.list.ContactsListViewModel
 import com.kode.data.contacts.datasource.database.ContactsDataSourceImpl
-import com.kode.data.contacts.datasource.database.ImagesDataSourceImpl
+import com.kode.data.contacts.datasource.database.FilesDataSourceImpl
 import com.kode.domain.contacts.datasource.ContactsDataSource
-import com.kode.domain.contacts.datasource.ImagesDataSource
+import com.kode.domain.contacts.datasource.FilesDataSource
 import com.kode.domain.contacts.entity.Contact
 import com.kode.domain.contacts.usecase.CreateContact
 import com.kode.domain.contacts.usecase.DeleteContact
@@ -22,7 +22,7 @@ import org.koin.dsl.module
 object ContactsModule {
     val module = module {
         single<ContactsDataSource> { ContactsDataSourceImpl(androidContext()) }
-        single<ImagesDataSource> { ImagesDataSourceImpl(androidContext(), BuildConfig.AUTHORITIES) }
+        single<FilesDataSource> { FilesDataSourceImpl(androidContext(), BuildConfig.AUTHORITIES) }
 
         single { FetchContactsList(get()) }
         single { FetchContactById(get()) }

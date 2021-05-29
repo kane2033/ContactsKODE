@@ -10,7 +10,7 @@ data class ContactForm(
     var lastName: String? = null,
     var phoneNumber: PhoneNumberForm = PhoneNumberForm(),
     var avatarUri: Uri? = null,
-    var toneFilePath: String? = null
+    var toneUri: Uri? = null
 ) {
     private var avatarSource: AvatarSource? = null
 
@@ -23,7 +23,7 @@ data class ContactForm(
 
     fun isEmpty(): Boolean {
         return firstName.isNullOrBlank() and lastName.isNullOrBlank() and phoneNumber.isEmpty() and
-                avatarUri?.path.isNullOrBlank() and toneFilePath.isNullOrBlank()
+                avatarUri?.path.isNullOrBlank() and toneUri?.path.isNullOrBlank()
     }
 
     fun isEqualsToContact(contact: Contact?): Boolean {
@@ -40,7 +40,7 @@ data class ContactForm(
             phoneNumber.toPhoneNumber()
         ),
         avatarUri = avatarUri,
-        toneUri = toneFilePath?.let { Uri.parse(it) }
+        toneUri = toneUri
     )
 
     enum class AvatarSource {
