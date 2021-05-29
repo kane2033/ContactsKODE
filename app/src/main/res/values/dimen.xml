@@ -5,9 +5,15 @@
     <dimen name="item_text_margin">8dp</dimen>
     <dimen name="round_corner_radius">8dp</dimen>
 
+    <!--fragment_contact_edit.xml-->
     <dimen name="contact_input_margin_start">32dp</dimen>
     <dimen name="contact_input_margin_top">26dp</dimen>
     <dimen name="contact_input_margin_end">93dp</dimen>
     <dimen name="contact_input_margin_end_small">150dp</dimen>
     <dimen name="contact_edit_icon_size">24dp</dimen>
+
+    <!--Sticky alphabet header-->
+    <dimen name="alphabet_letter_size">40sp</dimen>
+    <dimen name="alphabet_extra_padding">-2dp</dimen>
+    <dimen name="contact_list_margin_start">80dp</dimen>
 </resources>

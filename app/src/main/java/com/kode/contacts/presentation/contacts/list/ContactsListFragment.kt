@@ -35,11 +35,16 @@ class ContactsListFragment : Fragment(R.layout.fragment_contacts_list) {
         }
 
         val adapter = ContactsAdapter(onContactClicked)
+        val itemDecoration = StickyLetterDecoration(requireContext())
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             viewModel = this@ContactsListFragment.viewModel
-            recyclerView.adapter = adapter
+
+            recyclerView.apply {
+                this.adapter = adapter
+                addItemDecoration(itemDecoration)
+            }
 
             addContactButton.setOnClickListener {
                 val action =
@@ -48,8 +53,9 @@ class ContactsListFragment : Fragment(R.layout.fragment_contacts_list) {
             }
         }
 
-        viewModel.contacts.observe(viewLifecycleOwner, {
-            adapter.submitList(it)
+        viewModel.contacts.observe(viewLifecycleOwner, { list ->
+            itemDecoration.setNewWords(list.map { it.firstName })
+            adapter.submitList(list)
         })
 
         viewModel.uiState.observeFailure(viewLifecycleOwner, {
