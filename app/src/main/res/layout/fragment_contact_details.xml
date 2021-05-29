@@ -96,6 +96,82 @@
                     tools:itemCount="2"
                     tools:listitem="@layout/item_phone_number" />
 
+                <View
+                    android:id="@+id/phoneRingtoneSeparator"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/separator_height"
+                    android:layout_marginTop="@dimen/def_margin"
+                    android:background="?attr/colorPrimaryVariant"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/ringtoneView"
+                    app:layout_constraintTop_toBottomOf="@id/phoneNumbersRecyclerView" />
+
+                <ImageView
+                    android:id="@+id/ringtoneIconView"
+                    android:layout_width="@dimen/phone_icon_size"
+                    android:layout_height="@dimen/phone_icon_size"
+                    android:layout_marginStart="@dimen/def_margin"
+                    android:layout_marginTop="@dimen/def_margin"
+                    android:contentDescription="@string/contact_name_description"
+                    android:src="@drawable/ic_music"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/phoneRingtoneSeparator" />
+
+                <TextView
+                    android:id="@+id/ringtoneView"
+                    style="@style/TextAppearance.MaterialComponents.Body2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/phone_start_margin"
+                    app:fileUriToName="@{viewModel.contact.toneUri}"
+                    app:layout_constraintBottom_toBottomOf="@id/ringtoneIconView"
+                    app:layout_constraintStart_toEndOf="@id/ringtoneIconView"
+                    app:layout_constraintTop_toTopOf="@id/ringtoneIconView"
+                    tools:text="Galaxy.ogg" />
+
+                <View
+                    android:id="@+id/ringtoneNotesSeparator"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/separator_height"
+                    android:layout_marginTop="@dimen/def_margin"
+                    android:background="?attr/colorPrimaryVariant"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ringtoneView" />
+
+                <ImageView
+                    android:id="@+id/notesIconView"
+                    android:layout_width="@dimen/phone_icon_size"
+                    android:layout_height="@dimen/phone_icon_size"
+                    android:layout_marginStart="@dimen/def_margin"
+                    android:layout_marginTop="@dimen/def_margin"
+                    android:contentDescription="@string/notes_description"
+                    android:src="@drawable/ic_notes"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ringtoneNotesSeparator" />
+
+                <TextView
+                    android:id="@+id/notesView"
+                    style="@style/TextAppearance.MaterialComponents.Body2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/phone_start_margin"
+                    android:text="@{viewModel.contact.notes}"
+                    app:layout_constraintBottom_toBottomOf="@id/notesIconView"
+                    app:layout_constraintStart_toEndOf="@id/notesIconView"
+                    app:layout_constraintTop_toTopOf="@id/notesIconView"
+                    tools:text="Some notes about this contact" />
+
+                <View
+                    android:id="@+id/notesSeparator"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/separator_height"
+                    android:layout_marginTop="@dimen/def_margin"
+                    android:background="?attr/colorPrimaryVariant"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/notesView" />
+
                 <androidx.core.widget.ContentLoadingProgressBar
                     android:id="@+id/progressBar"
                     style="?android:attr/progressBarStyleLarge"

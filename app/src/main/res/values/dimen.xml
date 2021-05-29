@@ -5,6 +5,10 @@
     <dimen name="item_text_margin">8dp</dimen>
     <dimen name="round_corner_radius">8dp</dimen>
 
+    <dimen name="phone_start_margin">27dp</dimen>
+    <dimen name="phone_icon_size">18dp</dimen>
+    <dimen name="separator_height">2dp</dimen>
+
     <!--fragment_contact_edit.xml-->
     <dimen name="contact_input_margin_start">32dp</dimen>
     <dimen name="contact_input_margin_top">26dp</dimen>

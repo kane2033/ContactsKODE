@@ -24,8 +24,8 @@
 
         <ImageButton
             android:id="@+id/phoneIconButton"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="@dimen/phone_icon_size"
+            android:layout_height="@dimen/phone_icon_size"
             android:layout_marginStart="@dimen/def_margin"
             android:backgroundTint="@android:color/transparent"
             android:contentDescription="@string/phone_number_call"
@@ -39,7 +39,7 @@
             style="@style/phone_number_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="27dp"
+            android:layout_marginStart="@dimen/phone_start_margin"
             android:text="@{item.number}"
             app:layout_constraintStart_toEndOf="@id/phoneIconButton"
             app:layout_constraintTop_toTopOf="parent"
@@ -59,8 +59,8 @@
 
         <ImageButton
             android:id="@+id/videoIconButton"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="@dimen/phone_icon_size"
+            android:layout_height="@dimen/phone_icon_size"
             android:layout_marginStart="@dimen/def_margin"
             android:layout_marginEnd="29dp"
             android:backgroundTint="@android:color/transparent"
@@ -72,8 +72,8 @@
 
         <ImageButton
             android:id="@+id/chatIconButton"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="@dimen/phone_icon_size"
+            android:layout_height="@dimen/phone_icon_size"
             android:layout_marginEnd="@dimen/def_margin"
             android:backgroundTint="@android:color/transparent"
             android:contentDescription="@string/phone_number_chat"
