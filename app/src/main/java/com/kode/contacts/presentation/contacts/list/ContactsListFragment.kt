@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -66,15 +67,23 @@ class ContactsListFragment : Fragment(R.layout.fragment_contacts_list) {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_contacts_list, menu)
+
+        val searchView = menu.findItem(R.id.searchButton).actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            // Фильтрация при каждом вводе символа
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let { viewModel.searchContacts(newText) }
+                return false
+            }
+
+            override fun onQueryTextSubmit(query: String?) = false
+        })
+
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.searchButton -> makeSnackBar(
-                R.string.feature_in_development,
-                view = binding.addContactButton
-            )
             R.id.settingsButton -> makeSnackBar(
                 R.string.feature_in_development,
                 view = binding.addContactButton

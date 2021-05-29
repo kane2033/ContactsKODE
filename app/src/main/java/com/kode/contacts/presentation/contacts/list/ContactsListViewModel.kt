@@ -10,10 +10,14 @@ import com.kode.domain.base.Event
 import com.kode.domain.base.UiState
 import com.kode.domain.contacts.entity.Contact
 import com.kode.domain.contacts.usecase.FetchContactsList
+import com.kode.domain.contacts.usecase.SearchContacts
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class ContactsListViewModel(private val fetchContactsList: FetchContactsList) : ViewModel() {
+class ContactsListViewModel(
+    private val fetchContactsList: FetchContactsList,
+    private val searchContactsUseCase: SearchContacts
+) : ViewModel() {
 
     private val _uiState = MutableLiveData<Event<UiState>>()
     val uiState = _uiState.asLiveData()
@@ -21,13 +25,30 @@ class ContactsListViewModel(private val fetchContactsList: FetchContactsList) : 
     private val _contacts = MutableLiveData<List<Contact>>()
     val contacts = _contacts.asLiveData()
 
+    private var unfilteredContacts = listOf<Contact>()
+
     init {
         fetchContacts()
     }
 
     private fun fetchContacts() {
         viewModelScope.launch {
-            fetchContactsList(Unit).loadingIndication(_uiState).collect { result ->
+            val flow = fetchContactsList(Unit).loadingIndication(_uiState)
+            flow.collect { result ->
+                result.fold(
+                    onSuccess = {
+                        _contacts.value = it
+                        unfilteredContacts = it
+                    },
+                    onFailure = { it.handleFailure(_uiState) }
+                )
+            }
+        }
+    }
+
+    fun searchContacts(constraint: String) {
+        viewModelScope.launch {
+            searchContactsUseCase(constraint).loadingIndication(_uiState).collect { result ->
                 result.fold(
                     onSuccess = { _contacts.value = it },
                     onFailure = { it.handleFailure(_uiState) }
