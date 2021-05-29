@@ -10,6 +10,7 @@ data class Contact(
     val firstName: String,
     val lastName: String?,
     val phoneNumbers: List<PhoneNumber>,
+    val notes: String?,
     val avatarUri: Uri?,
     val toneUri: Uri?
 ) : Parcelable

@@ -84,6 +84,7 @@
                     style="@style/TextAppearance.MaterialComponents.Body2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
                     android:inputType="phone"
                     android:maxLength="@integer/max_phone_length"
                     android:text="@={viewModel.contactForm.phoneNumber.number}"
@@ -110,11 +111,14 @@
                     style="@style/TextAppearance.MaterialComponents.Body2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:focusable="false"
                     android:inputType="none"
+                    android:singleLine="true"
                     android:labelFor="@id/phoneTypeInputLayout"
                     app:phoneType="@={viewModel.contactForm.phoneNumber.type}"
-                    tools:text="Mobile"
-                    tools:ignore="LabelFor" />
+                    tools:ignore="LabelFor"
+                    tools:text="Mobile" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <ImageView
@@ -145,6 +149,7 @@
                     style="@style/TextAppearance.MaterialComponents.Body2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
                     android:inputType="textCapWords"
                     android:maxLength="@integer/max_name_length"
                     android:text="@={viewModel.contactForm.firstName}"
@@ -170,6 +175,7 @@
                     style="@style/TextAppearance.MaterialComponents.Body2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
                     android:inputType="textCapWords"
                     android:maxLength="@integer/max_name_length"
                     android:text="@={viewModel.contactForm.lastName}" />
@@ -188,8 +194,8 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/ringtoneInputLayout"
-                android:layout_width="0dp"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/contact_input_margin_start"
                 android:layout_marginEnd="@dimen/contact_input_margin_end"
@@ -201,11 +207,48 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/ringtoneEditText"
-                    android:layout_width="match_parent"
                     style="@style/TextAppearance.MaterialComponents.Body2"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="false"
                     app:fileUriToName="@{viewModel.contactForm.toneUri}"
                     tools:ignore="LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/notesIconView"
+                android:layout_width="@dimen/contact_edit_icon_size"
+                android:layout_height="@dimen/contact_edit_icon_size"
+                android:layout_marginStart="@dimen/def_margin"
+                android:layout_marginTop="40dp"
+                android:contentDescription="@string/notes_description"
+                android:src="@drawable/ic_notes"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ringtoneInputLayout" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/notesInputLayout"
+                style="@style/contact_edit_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/contact_input_margin_start"
+                android:layout_marginEnd="@dimen/contact_input_margin_end"
+                android:hint="@string/notes_hint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/notesIconView"
+                app:layout_constraintTop_toTopOf="@id/notesIconView">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/notesEditText"
+                    style="@style/TextAppearance.MaterialComponents.Body2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="clip_horizontal"
+                    android:imeOptions="actionDone"
+                    android:singleLine="true"
+                    android:maxLength="@integer/max_note_length"
+                    android:text="@={viewModel.contactForm.notes}"
+                    tools:text="Some notes" />
             </com.google.android.material.textfield.TextInputLayout>
 
 

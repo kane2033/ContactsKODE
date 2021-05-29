@@ -45,6 +45,7 @@
     <string name="number_description">Contact\'s phone number</string>
     <string name="contact_name_description">Contact\'s name</string>
     <string name="ringtone_description">Contact\'s ringtone</string>
+    <string name="notes_description">Notes about contact</string>
 
     <string name="change_photo">Change</string>
     <string name="phone_number_hint">Phone number</string>
@@ -52,6 +53,7 @@
     <string name="first_name_hint">First name</string>
     <string name="last_name_hint">Last name</string>
     <string name="ringtone_hint">Ringtone</string>
+    <string name="notes_hint">Notes</string>
 
     <string name="phone_number_error">Phone number cannot be empty</string>
     <string name="phone_type_error">Phone type is incorrect</string>
@@ -60,6 +62,7 @@
 
     <integer name="max_name_length">25</integer>
     <integer name="max_phone_length">12</integer>
+    <integer name="max_note_length">150</integer>
 
     <string name="error_base_title">Something went wrong</string>
     <string name="error_base">The problem is on our side, we are already looking into it.

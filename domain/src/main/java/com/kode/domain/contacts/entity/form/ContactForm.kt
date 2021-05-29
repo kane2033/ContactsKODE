@@ -9,6 +9,7 @@ data class ContactForm(
     var firstName: String? = null,
     var lastName: String? = null,
     var phoneNumber: PhoneNumberForm = PhoneNumberForm(),
+    var notes: String? = null,
     var avatarUri: Uri? = null,
     var toneUri: Uri? = null
 ) {
@@ -39,6 +40,7 @@ data class ContactForm(
         phoneNumbers = listOf(
             phoneNumber.toPhoneNumber()
         ),
+        notes = notes,
         avatarUri = avatarUri,
         toneUri = toneUri
     )

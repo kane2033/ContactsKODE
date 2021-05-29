@@ -8,6 +8,7 @@ data class ContactEntity(
     @PrimaryKey(autoGenerate = true) val contactId: Long = 0,
     val firstName: String,
     val lastName: String?,
+    val notes: String?,
     val avatarFilePath: String?,
     val toneFilePath: String?
 )

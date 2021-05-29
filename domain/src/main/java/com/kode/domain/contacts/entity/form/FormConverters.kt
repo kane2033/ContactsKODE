@@ -8,6 +8,7 @@ fun Contact.toForm() = ContactForm(
     firstName = firstName,
     lastName = lastName,
     phoneNumber = phoneNumbers[0].toForm(),
+    notes = notes,
     avatarUri = avatarUri,
     toneUri = toneUri
 )

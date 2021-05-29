@@ -19,6 +19,7 @@ fun ContactWithPhoneNumbersEntity.toDomainEntity(): Contact {
                 type = enumValueOf(it.type)
             )
         },
+        notes = contact.notes,
         avatarUri = contact.avatarFilePath?.let { Uri.parse(it) },
         toneUri = contact.toneFilePath?.let { Uri.parse(it) }
     )
@@ -34,6 +35,7 @@ fun Contact.toDbEntity(): ContactWithPhoneNumbersEntity {
             contactId = id,
             firstName = firstName,
             lastName = lastName,
+            notes = notes,
             avatarFilePath = avatarUri?.path,
             toneFilePath = toneUri?.path
         ),
