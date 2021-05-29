@@ -27,6 +27,35 @@
                 android:layout_height="wrap_content"
                 android:theme="@style/Theme.ContactsKODE.ContactInfo">
 
+                <com.google.android.material.appbar.AppBarLayout
+                    android:id="@+id/app_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:elevation="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:background="?attr/colorPrimaryVariant"
+                        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+                </com.google.android.material.appbar.AppBarLayout>
+
+                <View
+                    android:id="@+id/background"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="?attr/colorPrimaryVariant"
+                    app:layout_constraintBottom_toTopOf="@id/phoneNumbersRecyclerView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/app_bar" />
+
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/photoView"
                     android:layout_width="96dp"
@@ -38,7 +67,7 @@
                     app:imageFilePath="@{viewModel.contact.avatarUri}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/app_bar"
                     app:shapeAppearanceOverlay="@style/roundedCornersImageView"
                     tools:src="@drawable/ic_avatar_border" />
 
@@ -59,12 +88,28 @@
                     android:id="@+id/phoneNumbersRecyclerView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/def_margin"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/nameView"
                     tools:itemCount="2"
                     tools:listitem="@layout/item_phone_number" />
+
+                <androidx.core.widget.ContentLoadingProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    android:indeterminateTintMode="src_atop"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:loading="@{viewModel.uiState}"
+                    tools:visibility="visible" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 

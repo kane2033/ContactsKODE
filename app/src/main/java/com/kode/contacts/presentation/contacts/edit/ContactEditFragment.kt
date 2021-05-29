@@ -8,7 +8,6 @@ import android.view.*
 import android.widget.ArrayAdapter
 import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -111,6 +110,45 @@ class ContactEditFragment : Fragment(R.layout.fragment_contact_edit), GetPicture
                 getTone.launch(RingtoneManager.TYPE_RINGTONE)
             }
             ringtoneEditText.keyListener = null
+
+            toolbar.apply {
+                setupToolbarWithNavController(this)
+
+                inflateMenu(R.menu.toolbar_contact_edit)
+
+                // Прячем кнопку удаления, если контакт еще не создан
+                val deleteVisibility =
+                    this@ContactEditFragment.viewModel.mode != ContactEditViewModel.Mode.CREATE
+                menu.findItem(R.id.deleteButton).isVisible = deleteVisibility
+
+                // Кнопка галочки
+                setNavigationOnClickListener {
+                    this@ContactEditFragment.viewModel.createContact {
+                        findNavController().popBackStack()
+                        hideKeyboard()
+                    }
+                }
+
+                setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.deleteButton -> {
+                            deleteContact()
+                            true
+                        }
+                        R.id.inDevelopmentButton -> {
+                            makeSnackBar(R.string.feature_in_development)
+                            true
+                        }
+                        else -> false
+                    }
+                }
+
+                val title = when (this@ContactEditFragment.viewModel.mode) {
+                    ContactEditViewModel.Mode.CREATE -> R.string.contact_create_title
+                    ContactEditViewModel.Mode.EDIT -> R.string.contact_edit_title
+                }
+                setTitle(title)
+            }
         }
 
         viewModel.uiState.observeFailure(viewLifecycleOwner, {
@@ -125,17 +163,6 @@ class ContactEditFragment : Fragment(R.layout.fragment_contact_edit), GetPicture
                 }
             }
         })
-
-        // Установка заголовка и левой кнопки (на галочку) тулбара
-        (requireActivity() as AppCompatActivity).supportActionBar?.apply {
-            val title = when (viewModel.mode) {
-                ContactEditViewModel.Mode.CREATE -> R.string.contact_create_title
-                ContactEditViewModel.Mode.EDIT -> R.string.contact_edit_title
-            }
-            setTitle(title)
-
-            setHomeAsUpIndicator(R.drawable.ic_done)
-        }
 
         // При нажатии "Назад"
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
@@ -154,35 +181,6 @@ class ContactEditFragment : Fragment(R.layout.fragment_contact_edit), GetPicture
                 findNavController().popBackStack()
             }
         }
-
-        setHasOptionsMenu(true)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.toolbar_contact_edit, menu)
-
-        // Прячем кнопку удаления, если контакт еще не создан
-        val deleteVisibility = viewModel.mode != ContactEditViewModel.Mode.CREATE
-        menu.findItem(R.id.deleteButton).isVisible = deleteVisibility
-
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                viewModel.createContact {
-                    findNavController().popBackStack()
-                    hideKeyboard()
-                }
-                return true // Отключение кнопки "назад"
-            }
-            R.id.deleteButton -> {
-                deleteContact()
-            }
-            R.id.inDevelopmentButton -> makeSnackBar(R.string.feature_in_development)
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     // Удаление контакта
@@ -203,5 +201,10 @@ class ContactEditFragment : Fragment(R.layout.fragment_contact_edit), GetPicture
             positiveText = R.string.yes,
             negativeText = R.string.no
         )
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.toolbar.setNavigationIcon(R.drawable.ic_done)
     }
 }

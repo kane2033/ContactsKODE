@@ -6,13 +6,16 @@ import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.kode.contacts.R
 import com.kode.contacts.presentation.base.exception.FailureFragmentDirections
@@ -174,6 +177,21 @@ private fun Context.hideKeyboard(view: View) {
     inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
-fun Fragment.setActionBarHomeIcon(@DrawableRes drawableRes: Int) {
-    (activity as? AppCompatActivity)?.supportActionBar?.setHomeAsUpIndicator(drawableRes)
+fun Fragment.setupToolbarWithNavController(toolbar: Toolbar) {
+    findNavController().apply {
+        val appBarConfiguration = AppBarConfiguration(graph)
+        toolbar.setupWithNavController(this, appBarConfiguration)
+    }
+}
+
+fun Fragment.setupToolbarAndDrawerWithNavController(
+    toolbar: Toolbar,
+    drawerLayout: DrawerLayout,
+    navigationView: NavigationView
+) {
+    findNavController().apply {
+        val appBarConfiguration = AppBarConfiguration(graph, drawerLayout)
+        toolbar.setupWithNavController(this, appBarConfiguration)
+        navigationView.setupWithNavController(this)
+    }
 }

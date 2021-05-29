@@ -15,6 +15,14 @@ fun <T> Flow<T>.loadingIndication(uiState: MutableLiveData<Event<UiState>>) =
     onStart { uiState.value = Event(UiState.Loading) }
         .onCompletion { uiState.value = Event(UiState.Success) }
 
+fun MutableLiveData<Event<UiState>>.setLoading() {
+    value = Event(UiState.Loading)
+}
+
+fun MutableLiveData<Event<UiState>>.setSuccess() {
+    value = Event(UiState.Success)
+}
+
 // Стандартный метод обработки ошибки, упаковывающий ее
 // в event
 fun Throwable.handleFailure(uiState: MutableLiveData<Event<UiState>>) {

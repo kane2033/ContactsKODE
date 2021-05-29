@@ -35,7 +35,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/roundedCornersImageView"
-            tools:src="@color/purple_200" />
+            tools:src="@drawable/ic_avatar_border" />
 
         <TextView
             android:id="@+id/nameView"
