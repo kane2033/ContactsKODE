@@ -8,7 +8,6 @@ import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.kode.contacts.R
 import com.kode.contacts.databinding.FragmentFailureBinding
-import com.kode.weather.presentation.base.exception.RetryClickedInterface
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 

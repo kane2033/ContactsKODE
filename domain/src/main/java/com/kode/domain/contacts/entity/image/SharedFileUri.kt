@@ -13,5 +13,4 @@ import android.net.Uri
 data class SharedFileUri(
     val fileUri: Uri,
     val sharedByProviderUri: Uri
-) {
-}
+)

@@ -28,10 +28,4 @@ class ContactsAdapter(clickListener: ItemClickedInterface<Contact>) :
         list?.let { unfilteredList = it }
         super.submitList(list)
     }
-
-    // Когда требуется показать отсортированный список,
-    // не перезаписываем unfilteredList
-    private fun submitListFiltered(list: List<Contact>?) {
-        super.submitList(list)
-    }
 }

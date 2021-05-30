@@ -4,7 +4,7 @@
     <item
         android:id="@+id/deleteButton"
         android:icon="@drawable/ic_delete"
-        android:title="@string/contact_favorite"
+        android:title="@string/contact_delete"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/inDevelopmentButton"

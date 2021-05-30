@@ -30,7 +30,6 @@
     <string name="take_picture_permission_required">Camera permission is required
         to take a picture.</string>
 
-    <string name="contact_save">Save contact</string>
     <string name="contact_delete">Delete contact</string>
 
     <string name="contact_unsaved_title">Contact is unsaved</string>
@@ -42,9 +41,7 @@
     <string name="contact_deletion">Are you sure you want to delete this contact?</string>
 
     <string name="photo_description">Contact\'s photo</string>
-    <string name="number_description">Contact\'s phone number</string>
     <string name="contact_name_description">Contact\'s name</string>
-    <string name="ringtone_description">Contact\'s ringtone</string>
     <string name="notes_description">Notes about contact</string>
 
     <string name="change_photo">Change</string>
@@ -56,17 +53,13 @@
     <string name="notes_hint">Notes</string>
 
     <string name="phone_number_error">Phone number cannot be empty</string>
-    <string name="phone_type_error">Phone type is incorrect</string>
     <string name="first_name_error">First name cannot be empty</string>
-    <string name="last_name_error">Last name is incorrect</string>
 
     <integer name="max_name_length">25</integer>
     <integer name="max_phone_length">12</integer>
     <integer name="max_note_length">150</integer>
 
     <string name="error_base_title">Something went wrong</string>
-    <string name="error_base">The problem is on our side, we are already looking into it.
-        Please try refreshing the screen later.</string>
 
     <string name="error_phone_incorrect">Phone number is incorrect.</string>
 

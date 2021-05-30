@@ -2,8 +2,6 @@
 <resources>
     <dimen name="def_margin">16dp</dimen>
     <dimen name="half_def_margin">8dp</dimen>
-    <dimen name="item_text_margin">8dp</dimen>
-    <dimen name="round_corner_radius">8dp</dimen>
 
     <dimen name="phone_start_margin">27dp</dimen>
     <dimen name="phone_icon_size">18dp</dimen>

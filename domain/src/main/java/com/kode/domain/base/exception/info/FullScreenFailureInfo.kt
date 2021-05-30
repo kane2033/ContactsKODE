@@ -1,7 +1,6 @@
 package com.kode.domain.base.exception.info
 
 import android.os.Parcelable
-import com.kode.domain.base.exception.info.FailureInfo
 import kotlinx.parcelize.Parcelize
 
 /**
