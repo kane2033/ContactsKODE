@@ -37,9 +37,7 @@ data class ContactForm(
         id = id,
         firstName = ValidationConstraint.NotEmpty.validate(firstName),
         lastName = lastName,
-        phoneNumbers = listOf(
-            phoneNumber.toPhoneNumber()
-        ),
+        phoneNumber = phoneNumber.toPhoneNumber(),
         notes = notes,
         avatarUri = avatarUri,
         toneUri = toneUri

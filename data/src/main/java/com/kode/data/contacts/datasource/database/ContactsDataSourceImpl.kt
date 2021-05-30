@@ -25,11 +25,11 @@ class ContactsDataSourceImpl(context: Context) : ContactsDataSource {
     }
 
     override suspend fun addContactsList(contacts: List<Contact>) {
-        return database.contactDao().insertContactsListWithPhones(contacts.toDbEntityList())
+        return database.contactDao().insertContactsListWithPhone(contacts.toDbEntityList())
     }
 
     override suspend fun addContact(contact: Contact) {
-        return database.contactDao().insertContactWithPhones(contact.toDbEntity())
+        return database.contactDao().insertContactWithPhone(contact.toDbEntity())
     }
 
     override suspend fun deleteContact(contact: Contact) {

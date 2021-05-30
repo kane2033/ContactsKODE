@@ -2,7 +2,7 @@ package com.kode.data.contacts.datasource.database.dao
 
 import androidx.room.*
 import com.kode.data.contacts.datasource.database.entity.ContactEntity
-import com.kode.data.contacts.datasource.database.entity.ContactWithPhoneNumbersEntity
+import com.kode.data.contacts.datasource.database.entity.ContactWithPhoneNumberEntity
 import com.kode.data.contacts.datasource.database.entity.PhoneNumberEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -11,61 +11,61 @@ interface ContactDao {
 
     @Transaction
     @Query("SELECT * FROM ContactEntity WHERE contactId=:id")
-    fun getContactById(id: Long): Flow<ContactWithPhoneNumbersEntity>
+    fun getContactById(id: Long): Flow<ContactWithPhoneNumberEntity>
 
     @Transaction
     @Query("SELECT * FROM ContactEntity")
-    fun getAll(): Flow<List<ContactWithPhoneNumbersEntity>>
+    fun getAll(): Flow<List<ContactWithPhoneNumberEntity>>
 
     @Transaction
     @Query("SELECT * FROM ContactEntity ORDER BY firstName")
-    fun getAllByFirstName(): Flow<List<ContactWithPhoneNumbersEntity>>
+    fun getAllByFirstName(): Flow<List<ContactWithPhoneNumberEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertContactEntity(contact: ContactEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPhoneNumbersEntities(phoneNumbers: List<PhoneNumberEntity>)
+    suspend fun insertPhoneNumberEntity(phoneNumber: PhoneNumberEntity)
 
     @Delete
     suspend fun deleteContactEntity(contact: ContactEntity): Int
 
     @Delete
-    suspend fun deletePhoneNumbersEntities(phoneNumbers: List<PhoneNumberEntity>)
+    suspend fun deletePhoneNumberEntity(phoneNumber: PhoneNumberEntity)
 
     @Transaction
-    suspend fun insertContactsListWithPhones(contacts: List<ContactWithPhoneNumbersEntity>) {
-        contacts.forEach { insertContactWithPhones(it) }
+    suspend fun insertContactsListWithPhone(contacts: List<ContactWithPhoneNumberEntity>) {
+        contacts.forEach { insertContactWithPhone(it) }
     }
 
     @Transaction
-    suspend fun insertContactWithPhones(contact: ContactWithPhoneNumbersEntity) {
-        contactWithPhoneNumbersTransaction(
+    suspend fun insertContactWithPhone(contact: ContactWithPhoneNumberEntity) {
+        contactWithPhoneNumberTransaction(
             contact = contact,
             contactQuery = this::insertContactEntity,
-            phoneNumbersQuery = this::insertPhoneNumbersEntities
+            phoneNumberQuery = this::insertPhoneNumberEntity
         )
     }
 
     @Transaction
-    suspend fun deleteContactWithPhones(contact: ContactWithPhoneNumbersEntity) {
-        contactWithPhoneNumbersTransaction(
+    suspend fun deleteContactWithPhones(contact: ContactWithPhoneNumberEntity) {
+        contactWithPhoneNumberTransaction(
             contact = contact,
             contactQuery = { deleteContactEntity(contact.contact).toLong() },
-            phoneNumbersQuery = this::deletePhoneNumbersEntities
+            phoneNumberQuery = this::deletePhoneNumberEntity
         )
     }
 
-    private suspend fun contactWithPhoneNumbersTransaction(
-        contact: ContactWithPhoneNumbersEntity,
+    private suspend fun contactWithPhoneNumberTransaction(
+        contact: ContactWithPhoneNumberEntity,
         contactQuery: suspend (contact: ContactEntity) -> Long,
-        phoneNumbersQuery: suspend (phoneNumbers: List<PhoneNumberEntity>) -> Unit
+        phoneNumberQuery: suspend (phoneNumber: PhoneNumberEntity) -> Unit
     ) {
         val contactEntity = contact.contact
-        val phoneEntities = contact.phoneNumbers
+        val phoneEntity = contact.phoneNumber
 
         val contactId = contactQuery(contactEntity)
-        phoneEntities.forEach { it.phoneOwnerId = contactId }
-        phoneNumbersQuery(phoneEntities)
+        phoneEntity.phoneOwnerId = contactId
+        phoneNumberQuery(phoneEntity)
     }
 }

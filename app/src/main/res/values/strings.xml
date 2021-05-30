@@ -68,6 +68,8 @@
     <string name="error_base">The problem is on our side, we are already looking into it.
         Please try refreshing the screen later.</string>
 
+    <string name="error_phone_incorrect">Phone number is incorrect.</string>
+
     <string name="error_validation">Some fields are incorrect.</string>
     <string name="ok">Okay</string>
     <string name="error_validation_field">Field is incorrect</string>

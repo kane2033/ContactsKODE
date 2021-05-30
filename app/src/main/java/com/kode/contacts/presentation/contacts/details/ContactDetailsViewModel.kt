@@ -10,6 +10,7 @@ import com.kode.contacts.presentation.base.extension.setSuccess
 import com.kode.domain.base.Event
 import com.kode.domain.base.UiState
 import com.kode.domain.contacts.entity.Contact
+import com.kode.domain.contacts.exception.ContactDetailsFailure
 import com.kode.domain.contacts.usecase.FetchContactById
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
@@ -25,6 +26,12 @@ class ContactDetailsViewModel(
 
     private val _contact = MutableLiveData<Contact>()
     val contact = _contact.asLiveData()
+
+    fun setPhoneIncorrectFailure() {
+        _uiState.value = Event(UiState.Failure(ContactDetailsFailure.PhoneIncorrect))
+    }
+
+    fun getPhoneNumber(): String? = contact.value?.phoneNumber?.number
 
     init {
         fetchSelectedContact()

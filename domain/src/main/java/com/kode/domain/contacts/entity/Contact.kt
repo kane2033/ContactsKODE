@@ -9,7 +9,7 @@ data class Contact(
     val id: Long = 0,
     val firstName: String,
     val lastName: String?,
-    val phoneNumbers: List<PhoneNumber>,
+    val phoneNumber: PhoneNumber,
     val notes: String?,
     val avatarUri: Uri?,
     val toneUri: Uri?

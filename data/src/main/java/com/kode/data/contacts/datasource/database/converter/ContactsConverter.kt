@@ -2,35 +2,25 @@ package com.kode.data.contacts.datasource.database.converter
 
 import android.net.Uri
 import com.kode.data.contacts.datasource.database.entity.ContactEntity
-import com.kode.data.contacts.datasource.database.entity.ContactWithPhoneNumbersEntity
+import com.kode.data.contacts.datasource.database.entity.ContactWithPhoneNumberEntity
 import com.kode.data.contacts.datasource.database.entity.PhoneNumberEntity
 import com.kode.domain.contacts.entity.Contact
 import com.kode.domain.contacts.entity.PhoneNumber
 
-fun ContactWithPhoneNumbersEntity.toDomainEntity(): Contact {
+fun ContactWithPhoneNumberEntity.toDomainEntity(): Contact {
     return Contact(
         id = contact.contactId,
         firstName = contact.firstName,
         lastName = contact.lastName,
-        phoneNumbers = phoneNumbers.map {
-            PhoneNumber(
-                id = it.phoneNumberId,
-                number = it.number,
-                type = enumValueOf(it.type)
-            )
-        },
+        phoneNumber = phoneNumber.toDomainEntity(),
         notes = contact.notes,
         avatarUri = contact.avatarFilePath?.let { Uri.parse(it) },
         toneUri = contact.toneFilePath?.let { Uri.parse(it) }
     )
 }
 
-fun List<ContactWithPhoneNumbersEntity>.toDomainEntityList(): List<Contact> {
-    return map { it.toDomainEntity() }
-}
-
-fun Contact.toDbEntity(): ContactWithPhoneNumbersEntity {
-    return ContactWithPhoneNumbersEntity(
+fun Contact.toDbEntity(): ContactWithPhoneNumberEntity {
+    return ContactWithPhoneNumberEntity(
         contact = ContactEntity(
             contactId = id,
             firstName = firstName,
@@ -39,16 +29,27 @@ fun Contact.toDbEntity(): ContactWithPhoneNumbersEntity {
             avatarFilePath = avatarUri?.path,
             toneFilePath = toneUri?.path
         ),
-        phoneNumbers = phoneNumbers.map {
-            PhoneNumberEntity(
-                phoneNumberId = id,
-                number = it.number,
-                type = it.type.name
-            )
-        }
+        phoneNumber = phoneNumber.toDbEntity()
     )
 }
 
-fun List<Contact>.toDbEntityList(): List<ContactWithPhoneNumbersEntity> {
+fun PhoneNumberEntity.toDomainEntity() = PhoneNumber(
+    id = phoneNumberId,
+    number = number,
+    type = enumValueOf(type)
+)
+
+fun PhoneNumber.toDbEntity() = PhoneNumberEntity(
+    phoneNumberId = id,
+    number = number,
+    type = type.toString()
+)
+
+fun List<Contact>.toDbEntityList(): List<ContactWithPhoneNumberEntity> {
     return map { it.toDbEntity() }
 }
+
+fun List<ContactWithPhoneNumberEntity>.toDomainEntityList(): List<Contact> {
+    return map { it.toDomainEntity() }
+}
+

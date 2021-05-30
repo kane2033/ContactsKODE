@@ -8,10 +8,6 @@
         <variable
             name="viewModel"
             type="com.kode.contacts.presentation.contacts.details.ContactDetailsViewModel" />
-
-        <variable
-            name="adapter"
-            type="com.kode.contacts.presentation.contacts.details.PhoneNumberAdapter" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -51,7 +47,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:background="?attr/colorPrimaryVariant"
-                    app:layout_constraintBottom_toTopOf="@id/phoneNumbersRecyclerView"
+                    app:layout_constraintBottom_toBottomOf="@id/nameView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/app_bar" />
@@ -78,23 +74,72 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/def_margin"
                     android:gravity="center"
+                    android:paddingBottom="16dp"
                     android:text='@{@string/contact_name(viewModel.contact.firstName, viewModel.contact.LastName ?? "")}'
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/photoView"
                     tools:text="Alicia Malcolm" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/phoneNumbersRecyclerView"
+                <ImageButton
+                    android:id="@+id/phoneIconButton"
+                    android:layout_width="@dimen/phone_icon_size"
+                    android:layout_height="@dimen/phone_icon_size"
+                    android:layout_marginStart="@dimen/def_margin"
+                    android:backgroundTint="@android:color/transparent"
+                    android:contentDescription="@string/phone_number_call"
+                    android:src="@drawable/ic_phone"
+                    app:layout_constraintBottom_toBottomOf="@id/phoneTypeView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/phoneNumberView" />
+
+                <TextView
+                    android:id="@+id/phoneNumberView"
+                    style="@style/phone_number_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/phone_start_margin"
                     android:layout_marginTop="@dimen/def_margin"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@{viewModel.contact.phoneNumber.number}"
+                    app:layout_constraintStart_toEndOf="@id/phoneIconButton"
                     app:layout_constraintTop_toBottomOf="@id/nameView"
-                    tools:itemCount="2"
-                    tools:listitem="@layout/item_phone_number" />
+                    tools:text="+7 (906) 911 45 78" />
+
+                <TextView
+                    android:id="@+id/phoneTypeView"
+                    style="@style/phone_number_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/half_def_margin"
+                    app:layout_constraintStart_toStartOf="@id/phoneNumberView"
+                    app:layout_constraintTop_toBottomOf="@id/phoneNumberView"
+                    app:phoneType="@{viewModel.contact.phoneNumber.type}"
+                    tools:text="Mobile" />
+
+                <ImageButton
+                    android:id="@+id/videoIconButton"
+                    android:layout_width="@dimen/phone_icon_size"
+                    android:layout_height="@dimen/phone_icon_size"
+                    android:layout_marginStart="@dimen/def_margin"
+                    android:layout_marginEnd="29dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:contentDescription="@string/phone_number_video_call"
+                    android:src="@drawable/ic_video"
+                    app:layout_constraintBottom_toBottomOf="@id/chatIconButton"
+                    app:layout_constraintEnd_toStartOf="@id/chatIconButton"
+                    app:layout_constraintTop_toTopOf="@id/chatIconButton" />
+
+                <ImageButton
+                    android:id="@+id/chatIconButton"
+                    android:layout_width="@dimen/phone_icon_size"
+                    android:layout_height="@dimen/phone_icon_size"
+                    android:layout_marginEnd="@dimen/def_margin"
+                    android:backgroundTint="@android:color/transparent"
+                    android:contentDescription="@string/phone_number_chat"
+                    android:src="@drawable/ic_chat"
+                    app:layout_constraintBottom_toBottomOf="@id/phoneIconButton"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/phoneIconButton" />
 
                 <View
                     android:id="@+id/phoneRingtoneSeparator"
@@ -104,7 +149,7 @@
                     android:background="?attr/colorPrimaryVariant"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/ringtoneView"
-                    app:layout_constraintTop_toBottomOf="@id/phoneNumbersRecyclerView" />
+                    app:layout_constraintTop_toBottomOf="@id/phoneTypeView" />
 
                 <ImageView
                     android:id="@+id/ringtoneIconView"
@@ -185,7 +230,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:loading="@{viewModel.uiState}"
-                    tools:visibility="visible" />
+                    tools:visibility="gone" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
