@@ -49,7 +49,6 @@ class FailureFragment : DialogFragment(R.layout.fragment_failure) {
             lifecycleOwner = viewLifecycleOwner
         }
         binding.retryButton.setOnClickListener {
-            //viewModel.failureInfo.value?.retryClickedCallback?.invoke()
             clickedListener?.onRetryClicked()
             dismissAllowingStateLoss()
         }

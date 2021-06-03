@@ -1,4 +1,4 @@
-package com.kode.domain.base
+package com.kode.contacts.presentation.base.entity
 
 import com.kode.domain.base.exception.Failure as ThrowableFailure
 

@@ -2,6 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
     app:startDestination="@id/contactsListFragment">
 
     <fragment
@@ -61,7 +62,7 @@
         tools:layout="@layout/fragment_failure">
         <argument
             android:name="failureInfo"
-            app:argType="com.kode.domain.base.exception.info.FullScreenFailureInfo" />
+            app:argType="com.kode.contacts.presentation.base.exception.FailureInfo$FullScreen" />
     </dialog>
     <action
         android:id="@+id/action_global_failureFragment"

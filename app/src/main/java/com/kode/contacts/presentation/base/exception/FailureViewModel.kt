@@ -3,9 +3,8 @@ package com.kode.contacts.presentation.base.exception
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import com.kode.domain.base.exception.info.FullScreenFailureInfo
 
-class FailureViewModel(failureInfo: FullScreenFailureInfo) : ViewModel() {
+class FailureViewModel(failureInfo: FailureInfo.FullScreen) : ViewModel() {
 
-    val failureInfo: LiveData<FullScreenFailureInfo> = liveData { emit(failureInfo) }
+    val failureInfo: LiveData<FailureInfo.FullScreen> = liveData { emit(failureInfo) }
 }

@@ -14,11 +14,11 @@ import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.kode.contacts.R
 import com.kode.contacts.databinding.FragmentContactEditBinding
+import com.kode.contacts.presentation.base.exception.FailureInfo
 import com.kode.contacts.presentation.base.extension.*
 import com.kode.contacts.presentation.contacts.ContactsBindingAdapters.getPhoneTypesTranslation
 import com.kode.contacts.presentation.contacts.photo.GetPictureClickListener
 import com.kode.data.contacts.datasource.database.extension.getFileName
-import com.kode.domain.base.exception.info.SmallFailureInfo
 import com.kode.domain.validation.constraint.ValidationConstraint
 import com.kode.domain.validation.exception.ValidationFailure
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -154,7 +154,7 @@ class ContactEditFragment : Fragment(R.layout.fragment_contact_edit), GetPicture
         viewModel.uiState.observeFailure(viewLifecycleOwner, {
             openFailureView(it) { failure ->
                 when (failure) {
-                    is ValidationFailure -> SmallFailureInfo(
+                    is ValidationFailure -> FailureInfo.Small(
                         retryClickedCallback = {},
                         text = getString(R.string.error_validation),
                         buttonText = getString(R.string.ok)
