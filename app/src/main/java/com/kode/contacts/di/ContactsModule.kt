@@ -6,6 +6,7 @@ import com.kode.contacts.presentation.contacts.edit.ContactEditViewModel
 import com.kode.contacts.presentation.contacts.list.ContactsListViewModel
 import com.kode.data.contacts.datasource.database.ContactsDataSourceImpl
 import com.kode.data.contacts.datasource.database.FilesDataSourceImpl
+import com.kode.data.contacts.datasource.database.db.ContactsDatabase
 import com.kode.domain.contacts.datasource.ContactsDataSource
 import com.kode.domain.contacts.datasource.FilesDataSource
 import com.kode.domain.contacts.entity.Contact
@@ -18,7 +19,8 @@ import org.koin.dsl.module
 
 object ContactsModule {
     val module = module {
-        single<ContactsDataSource> { ContactsDataSourceImpl(androidContext()) }
+        single { ContactsDatabase.getContactDao(androidContext()) }
+        single<ContactsDataSource> { ContactsDataSourceImpl(get()) }
         single<FilesDataSource> { FilesDataSourceImpl(androidContext(), BuildConfig.AUTHORITIES) }
 
         single { FetchContactsList(get()) }

@@ -13,11 +13,13 @@ abstract class ContactsDatabase : RoomDatabase() {
     companion object {
         private const val NAME = "contacts_db"
 
-        fun getInstance(context: Context) = Room.databaseBuilder(
+        private fun getInstance(context: Context) = Room.databaseBuilder(
             context,
             ContactsDatabase::class.java,
             NAME
         ).build()
+
+        fun getContactDao(context: Context) = getInstance(context).contactDao()
     }
 
     abstract fun contactDao(): ContactDao
