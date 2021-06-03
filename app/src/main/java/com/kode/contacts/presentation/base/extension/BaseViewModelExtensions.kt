@@ -2,8 +2,8 @@ package com.kode.contacts.presentation.base.extension
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.kode.domain.base.Event
-import com.kode.domain.base.UiState
+import com.kode.contacts.presentation.base.entity.Event
+import com.kode.contacts.presentation.base.entity.UiState
 import com.kode.domain.base.exception.Failure
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onCompletion

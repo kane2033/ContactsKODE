@@ -10,11 +10,11 @@ import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.kode.contacts.R
 import com.kode.contacts.databinding.FragmentContactDetailsBinding
+import com.kode.contacts.presentation.base.exception.FailureInfo
 import com.kode.contacts.presentation.base.extension.makeSnackBar
 import com.kode.contacts.presentation.base.extension.observeFailure
 import com.kode.contacts.presentation.base.extension.openFailureView
 import com.kode.contacts.presentation.base.extension.setupToolbarWithNavController
-import com.kode.domain.base.exception.info.SmallFailureInfo
 import com.kode.domain.contacts.exception.ContactDetailsFailure
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -76,7 +76,7 @@ class ContactDetailsFragment : Fragment(R.layout.fragment_contact_details) {
         viewModel.uiState.observeFailure(viewLifecycleOwner, {
             openFailureView(it) { failure ->
                 when (failure) {
-                    ContactDetailsFailure.PhoneIncorrect -> SmallFailureInfo(
+                    ContactDetailsFailure.PhoneIncorrect -> FailureInfo.Small(
                         retryClickedCallback = {},
                         text = getString(R.string.error_phone_incorrect)
                     )

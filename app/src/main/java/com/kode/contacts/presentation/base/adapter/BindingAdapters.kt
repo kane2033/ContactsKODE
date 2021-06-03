@@ -6,9 +6,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.databinding.BindingAdapter
+import com.kode.contacts.presentation.base.entity.Event
+import com.kode.contacts.presentation.base.entity.UiState
 import com.kode.data.contacts.datasource.database.extension.getFileName
-import com.kode.domain.base.Event
-import com.kode.domain.base.UiState
 import java.io.File
 
 object BindingAdapters {

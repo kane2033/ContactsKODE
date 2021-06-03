@@ -14,11 +14,11 @@ import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.kode.contacts.R
 import com.kode.contacts.databinding.FragmentContactEditBinding
+import com.kode.contacts.presentation.base.exception.FailureInfo
 import com.kode.contacts.presentation.base.extension.*
 import com.kode.contacts.presentation.contacts.ContactsBindingAdapters.getPhoneTypesTranslation
 import com.kode.contacts.presentation.contacts.photo.GetPictureClickListener
 import com.kode.data.contacts.datasource.database.extension.getFileName
-import com.kode.domain.base.exception.info.SmallFailureInfo
 import com.kode.domain.validation.constraint.ValidationConstraint
 import com.kode.domain.validation.exception.ValidationFailure
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -116,10 +116,9 @@ class ContactEditFragment : Fragment(R.layout.fragment_contact_edit), GetPicture
 
                 inflateMenu(R.menu.toolbar_contact_edit)
 
-                // Прячем кнопку удаления, если контакт еще не создан
-                val deleteVisibility =
-                    this@ContactEditFragment.viewModel.mode != ContactEditViewModel.Mode.CREATE
-                menu.findItem(R.id.deleteButton).isVisible = deleteVisibility
+                // Прячем кнопку удаления, если создается новый контакт (нечего удалять)
+                menu.findItem(R.id.deleteButton).isVisible =
+                    !this@ContactEditFragment.viewModel.isContactNew()
 
                 // Кнопка галочки
                 setNavigationOnClickListener {
@@ -143,9 +142,10 @@ class ContactEditFragment : Fragment(R.layout.fragment_contact_edit), GetPicture
                     }
                 }
 
-                val title = when (this@ContactEditFragment.viewModel.mode) {
-                    ContactEditViewModel.Mode.CREATE -> R.string.contact_create_title
-                    ContactEditViewModel.Mode.EDIT -> R.string.contact_edit_title
+                val title = if (this@ContactEditFragment.viewModel.isContactNew()) {
+                    R.string.contact_create_title
+                } else {
+                    R.string.contact_edit_title
                 }
                 setTitle(title)
             }
@@ -154,7 +154,7 @@ class ContactEditFragment : Fragment(R.layout.fragment_contact_edit), GetPicture
         viewModel.uiState.observeFailure(viewLifecycleOwner, {
             openFailureView(it) { failure ->
                 when (failure) {
-                    is ValidationFailure -> SmallFailureInfo(
+                    is ValidationFailure -> FailureInfo.Small(
                         retryClickedCallback = {},
                         text = getString(R.string.error_validation),
                         buttonText = getString(R.string.ok)

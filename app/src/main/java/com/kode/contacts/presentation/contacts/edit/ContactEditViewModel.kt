@@ -4,11 +4,11 @@ import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kode.contacts.presentation.base.entity.Event
+import com.kode.contacts.presentation.base.entity.UiState
 import com.kode.contacts.presentation.base.extension.asLiveData
 import com.kode.contacts.presentation.base.extension.handleFailure
 import com.kode.contacts.presentation.base.extension.loadingIndication
-import com.kode.domain.base.Event
-import com.kode.domain.base.UiState
 import com.kode.domain.contacts.entity.Contact
 import com.kode.domain.contacts.entity.form.ContactForm
 import com.kode.domain.contacts.entity.form.toForm
@@ -34,7 +34,7 @@ class ContactEditViewModel(
     // (полезна для two day data binding)
     val contactForm = MutableLiveData(ContactForm())
 
-    val mode: Mode
+    private val mode: Mode
 
     // Хранит uri файла нового фото
     // (take picture)
@@ -65,6 +65,8 @@ class ContactEditViewModel(
         Mode.CREATE -> contactForm.value?.isEmpty() == false
         Mode.EDIT -> contactForm.value?.isEqualsToContact(contact) == false
     }
+
+    fun isContactNew() = mode == Mode.CREATE
 
     fun createContact(callback: () -> Unit) {
         val contactForm = contactForm.value ?: return

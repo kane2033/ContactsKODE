@@ -23,17 +23,20 @@ class FilesDataSourceImpl(
     }
 
     override fun saveFileToInternal(
-        externalFileUri: Uri,
+        fileUri: Uri,
         directory: FilesDataSource.Directory?
     ): Uri? {
-        //val fileName = generateFileName(directory)
         val fileName =
-            context.contentResolver.getFileName(externalFileUri) ?: generateFileName(directory)
+            context.contentResolver.getFileName(fileUri) ?: generateFileName(directory)
         val directoryString = parseDirectoryEnum(directory)
         val file = File(context.getDir(directoryString, Context.MODE_PRIVATE), fileName)
 
+        // Если это не внешний файл и уже сохранялся во
+        // внутренней папке
+        if (file.exists()) return fileUri
+
         val outputStream = FileOutputStream(file)
-        val inputStream = context.contentResolver.openInputStream(externalFileUri) ?: return null
+        val inputStream = context.contentResolver.openInputStream(fileUri) ?: return null
 
         inputStream.copyTo(outputStream)
 

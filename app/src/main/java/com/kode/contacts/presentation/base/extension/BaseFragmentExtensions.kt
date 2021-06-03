@@ -5,7 +5,6 @@ import android.app.AlertDialog
 import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
@@ -18,13 +17,11 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.kode.contacts.R
+import com.kode.contacts.presentation.base.entity.Event
+import com.kode.contacts.presentation.base.entity.UiState
 import com.kode.contacts.presentation.base.exception.FailureFragmentDirections
-import com.kode.domain.base.Event
-import com.kode.domain.base.UiState
+import com.kode.contacts.presentation.base.exception.FailureInfo
 import com.kode.domain.base.exception.Failure
-import com.kode.domain.base.exception.info.FailureInfo
-import com.kode.domain.base.exception.info.FullScreenFailureInfo
-import com.kode.domain.base.exception.info.SmallFailureInfo
 
 fun Fragment.makeAlertDialog(
     @StringRes title: Int? = null,
@@ -61,16 +58,6 @@ fun Fragment.makeAlertDialog(
         baseAlertDialog.setNegativeButton(negativeText) { _, _ -> negativeCallback() }
     }
     baseAlertDialog.show()
-}
-
-// Отображение Toast уведомления со строкой из ресурсов
-fun Fragment.makeToast(@StringRes message: Int) {
-    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-}
-
-// Отображение Toast уведомления с любой строкой
-fun Fragment.makeToast(message: String) {
-    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
 
 fun Fragment.makeSnackBar(
@@ -126,7 +113,7 @@ fun LiveData<Event<UiState>>.observeFailure(
  * Если переданный параметр [failure]
  * не обработан, отображает стандартное сообщение ошибки.
  *
- * В зависимости от возвращенного типа ([FullScreenFailureInfo] или [SmallFailureInfo])
+ * В зависимости от возвращенного типа ([FailureInfo.FullScreen] или [FailureInfo.Small])
  * открывается соответствующее окно, отображающее ошибку (полноэкранный диалог или снекбар соотв.)
  *
  * @param failure - ошибка, на основне которой открывается соответствующее окно ошибки.
@@ -143,23 +130,23 @@ fun Fragment.openFailureView(
     // Открытие окна с ошибкой
     when (val failureInfo: FailureInfo? = getFailureInfo(failure)) {
         // Открываем полноэкранный диалог
-        is FullScreenFailureInfo -> openFailureDialog(failureInfo)
+        is FailureInfo.FullScreen -> openFailureDialog(failureInfo)
         // Открываем снекбар
-        is SmallFailureInfo -> openFailureSnackBar(failureInfo)
+        is FailureInfo.Small -> openFailureSnackBar(failureInfo)
         // Если инфа об ошибке не указана (null), показываем базовую в полном экране
-        null -> openFailureSnackBar(SmallFailureInfo({}, getString(R.string.error_base_title)))
+        null -> openFailureSnackBar(FailureInfo.Small({}, getString(R.string.error_base_title)))
     }
 }
 
 // Открытие полноэкранного диалогового фрагмента с ошибкой
-private fun Fragment.openFailureDialog(failureInfo: FullScreenFailureInfo) {
+private fun Fragment.openFailureDialog(failureInfo: FailureInfo.FullScreen) {
     // Открываем фрагмент, передавая инфу об ошибке
     val action = FailureFragmentDirections.actionGlobalFailureFragment(failureInfo)
     findNavController().navigate(action)
 }
 
 // Открытие снэкбара с возможностью повторить операцию
-private fun Fragment.openFailureSnackBar(failureInfo: SmallFailureInfo) {
+private fun Fragment.openFailureSnackBar(failureInfo: FailureInfo.Small) {
     makeSnackBar(
         failureInfo.text,
         failureInfo.buttonText ?: getString(R.string.retry),
