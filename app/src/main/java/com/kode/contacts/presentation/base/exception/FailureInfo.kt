@@ -15,7 +15,7 @@ sealed class FailureInfo {
     data class FullScreen(
         val title: String,
         val text: String,
-        val buttonText: String? = null
+        val buttonText: String?
     ) : FailureInfo(), Parcelable
 
     /**

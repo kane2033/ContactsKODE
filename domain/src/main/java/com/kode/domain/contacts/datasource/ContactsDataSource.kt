@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.Flow
 interface ContactsDataSource {
     fun getContact(id: Long): Flow<Contact>
     fun getAllContacts(): Flow<List<Contact>>
-    suspend fun addContactsList(contacts: List<Contact>)
     suspend fun addContact(contact: Contact)
     suspend fun deleteContact(contact: Contact)
 }

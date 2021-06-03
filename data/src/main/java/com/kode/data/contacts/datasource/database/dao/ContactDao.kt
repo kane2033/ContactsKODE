@@ -14,10 +14,6 @@ interface ContactDao {
     fun getContactById(id: Long): Flow<ContactWithPhoneNumberEntity>
 
     @Transaction
-    @Query("SELECT * FROM ContactEntity")
-    fun getAll(): Flow<List<ContactWithPhoneNumberEntity>>
-
-    @Transaction
     @Query("SELECT * FROM ContactEntity ORDER BY firstName")
     fun getAllByFirstName(): Flow<List<ContactWithPhoneNumberEntity>>
 
@@ -32,11 +28,6 @@ interface ContactDao {
 
     @Delete
     suspend fun deletePhoneNumberEntity(phoneNumber: PhoneNumberEntity)
-
-    @Transaction
-    suspend fun insertContactsListWithPhone(contacts: List<ContactWithPhoneNumberEntity>) {
-        contacts.forEach { insertContactWithPhone(it) }
-    }
 
     @Transaction
     suspend fun insertContactWithPhone(contact: ContactWithPhoneNumberEntity) {

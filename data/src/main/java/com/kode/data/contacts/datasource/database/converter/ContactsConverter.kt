@@ -44,12 +44,3 @@ fun PhoneNumber.toDbEntity() = PhoneNumberEntity(
     number = number,
     type = type.toString()
 )
-
-fun List<Contact>.toDbEntityList(): List<ContactWithPhoneNumberEntity> {
-    return map { it.toDbEntity() }
-}
-
-fun List<ContactWithPhoneNumberEntity>.toDomainEntityList(): List<Contact> {
-    return map { it.toDomainEntity() }
-}
-

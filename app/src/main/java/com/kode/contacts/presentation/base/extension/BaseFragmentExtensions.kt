@@ -5,7 +5,6 @@ import android.app.AlertDialog
 import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
@@ -59,16 +58,6 @@ fun Fragment.makeAlertDialog(
         baseAlertDialog.setNegativeButton(negativeText) { _, _ -> negativeCallback() }
     }
     baseAlertDialog.show()
-}
-
-// Отображение Toast уведомления со строкой из ресурсов
-fun Fragment.makeToast(@StringRes message: Int) {
-    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-}
-
-// Отображение Toast уведомления с любой строкой
-fun Fragment.makeToast(message: String) {
-    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
 
 fun Fragment.makeSnackBar(

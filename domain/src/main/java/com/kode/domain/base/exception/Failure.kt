@@ -5,8 +5,13 @@ package com.kode.domain.base.exception
  * Каждая ошибка, связанная с api запросами, должна наследовать [RequestFailure]
  * Каждая ошибка, специфичная для для функции, должна наследовать [FeatureFailure].
  */
-sealed class Failure: Throwable() {
+sealed class Failure : Throwable() {
     open class FeatureFailure : Failure()
+
+    /*
+    * Если у приложения появится необходимость использование сети, понадобятся NetworkFailure,
+    * * поэтому неиспользуемые Failure оставлены на будущее.
+    * */
 
     object MissingContentFailure : Failure()
 

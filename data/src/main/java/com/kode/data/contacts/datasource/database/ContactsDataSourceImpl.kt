@@ -1,9 +1,7 @@
 package com.kode.data.contacts.datasource.database
 
 import com.kode.data.contacts.datasource.database.converter.toDbEntity
-import com.kode.data.contacts.datasource.database.converter.toDbEntityList
 import com.kode.data.contacts.datasource.database.converter.toDomainEntity
-import com.kode.data.contacts.datasource.database.converter.toDomainEntityList
 import com.kode.data.contacts.datasource.database.dao.ContactDao
 import com.kode.domain.contacts.datasource.ContactsDataSource
 import com.kode.domain.contacts.entity.Contact
@@ -17,12 +15,7 @@ class ContactsDataSourceImpl(private val dao: ContactDao) : ContactsDataSource {
     }
 
     override fun getAllContacts(): Flow<List<Contact>> {
-        return dao.getAllByFirstName()
-            .map { it.toDomainEntityList() }
-    }
-
-    override suspend fun addContactsList(contacts: List<Contact>) {
-        return dao.insertContactsListWithPhone(contacts.toDbEntityList())
+        return dao.getAllByFirstName().map { entityList -> entityList.map { it.toDomainEntity() } }
     }
 
     override suspend fun addContact(contact: Contact) {
