@@ -116,10 +116,9 @@ class ContactEditFragment : Fragment(R.layout.fragment_contact_edit), GetPicture
 
                 inflateMenu(R.menu.toolbar_contact_edit)
 
-                // Прячем кнопку удаления, если контакт еще не создан
-                val deleteVisibility =
-                    this@ContactEditFragment.viewModel.mode != ContactEditViewModel.Mode.CREATE
-                menu.findItem(R.id.deleteButton).isVisible = deleteVisibility
+                // Прячем кнопку удаления, если создается новый контакт (нечего удалять)
+                menu.findItem(R.id.deleteButton).isVisible =
+                    !this@ContactEditFragment.viewModel.isContactNew()
 
                 // Кнопка галочки
                 setNavigationOnClickListener {
@@ -143,9 +142,10 @@ class ContactEditFragment : Fragment(R.layout.fragment_contact_edit), GetPicture
                     }
                 }
 
-                val title = when (this@ContactEditFragment.viewModel.mode) {
-                    ContactEditViewModel.Mode.CREATE -> R.string.contact_create_title
-                    ContactEditViewModel.Mode.EDIT -> R.string.contact_edit_title
+                val title = if (this@ContactEditFragment.viewModel.isContactNew()) {
+                    R.string.contact_create_title
+                } else {
+                    R.string.contact_edit_title
                 }
                 setTitle(title)
             }

@@ -34,7 +34,7 @@ class ContactEditViewModel(
     // (полезна для two day data binding)
     val contactForm = MutableLiveData(ContactForm())
 
-    val mode: Mode
+    private val mode: Mode
 
     // Хранит uri файла нового фото
     // (take picture)
@@ -65,6 +65,8 @@ class ContactEditViewModel(
         Mode.CREATE -> contactForm.value?.isEmpty() == false
         Mode.EDIT -> contactForm.value?.isEqualsToContact(contact) == false
     }
+
+    fun isContactNew() = mode == Mode.CREATE
 
     fun createContact(callback: () -> Unit) {
         val contactForm = contactForm.value ?: return
